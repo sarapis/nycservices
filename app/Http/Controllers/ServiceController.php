@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Functions\Airtable;
 use App\Service;
+use App\Location;
 use App\Airtables;
 
 class ServiceController extends Controller
@@ -79,6 +80,22 @@ class ServiceController extends Controller
         $services = Service::orderBy('service_name')->paginate(20);
 
         return view('backEnd.tables.tb_services', compact('services'));
+    }
+
+    public function services()
+    {
+        $services = Service::orderBy('service_name')->paginate(10);
+        $locations = Location::with('service','organization')->get();
+
+        return view('frontEnd.services', compact('services', 'locations'));
+    }
+
+    public function service($id)
+    {
+        $service = Service::where('service_recordid', '=', $id)->first();
+        $location = Location::with('organization', 'address')->where('location_services', '=', $id)->first();
+
+        return view('frontEnd.service', compact('service', 'location'));
     }
 
     /**

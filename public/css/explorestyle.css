@@ -193,6 +193,15 @@ p{
 }
 .content-panel{
   background: #f3f3f3;
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  transition: box-shadow 1s;
+}
+.content-panel:hover{
+  z-index: 1000;
+  box-shadow: 0px 0px 50px rgba(57,73,76,.5);
 }
 /* ---------------------------------------------------
     CONTENT STYLE
@@ -500,7 +509,6 @@ p{
     position: absolute;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.7);
     z-index: 1;
     display: none;
     top: 0;
@@ -674,4 +682,18 @@ p{
 }
 .fd-link{
   display: block;
+}
+.panel-text{
+  font-size: 22px;
+  font-weight: 400;
+}
+.panel-link{
+  color: #428bca;
+  font-size: 1.286rem;
+  font-family: Roboto,sans-serif;
+  font-weight: 400;
+}
+.panel-link:hover {
+  color: #428bca;
+  cursor: pointer;
 }

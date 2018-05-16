@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Page;
 use App\Layout;
+use App\Service;
+use App\Organization;
+use App\Taxonomy;
 use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
@@ -12,9 +15,9 @@ class HomeController extends Controller
     public function home($value='')
     {
         $home = Page::where('name', 'Home')->first();
-        $layout = Layout::where('id', '1')->first();
+        $taxonomies = Taxonomy::where('taxonomy_parent_name', '=', NULL)->get();
 
-    	return view('frontEnd.home', compact('home', 'layout'));
+    	return view('frontEnd.home', compact('home', 'taxonomies'));
     }
 
     public function about($value='')
@@ -42,5 +45,19 @@ class HomeController extends Controller
     public function logviewerdashboard($value='')
     {
         return redirect('log-viewer');
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->input('find');
+
+        $services= Service::with(['organization', 'taxonomy'])->where('service_name', 'like', '%'.$search.'%')->orwhere('service_description', 'like', '%'.$search.'%')->orwhereHas('organization', function ($q)  use($search){
+                    $q->where('organization_name', 'like', '%'.$search.'%');
+                })->orwhereHas('taxonomy', function ($q)  use($search){
+                    $q->where('taxonomy_name', 'like', '%'.$search.'%');
+                })->paginate(10);
+
+        // $services =Service::where('service_name',  'like', '%'.$search.'%')->get();
+        return view('frontEnd.find', compact('services'));
     }
 }

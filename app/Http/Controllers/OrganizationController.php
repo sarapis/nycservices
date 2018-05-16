@@ -78,6 +78,13 @@ class OrganizationController extends Controller
         return view('backEnd.tables.tb_organization', compact('organizations'));
     }
 
+    public function organizations()
+    {
+        $organizations = Organization::orderBy('organization_name')->paginate(10);
+
+        return view('frontEnd.organizations', compact('organizations'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *

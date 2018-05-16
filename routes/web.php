@@ -20,9 +20,18 @@ Route::get('/admin', function () {
     //return view('welcome');
     return redirect('/login');
 });
+
+Route::match(['get', 'post'], '/find', [
+    'uses'          => 'HomeController@search'
+]);
+
 Route::get('/about', ['uses' => 'HomeController@about']);
 Route::get('/feedback', ['uses' => 'HomeController@feedback']);
-Route::get('/explore', 'ExploreController@index');
+
+Route::get('/services', 'ServiceController@services');
+Route::get('/service_{id}', 'ServiceController@service');
+
+Route::get('/organizations', 'OrganizationController@organizations');
 
 // Route::post('/explore', 'ExploreController@index');
 Route::get('/profile/{id}', 'ExploreController@profile');
