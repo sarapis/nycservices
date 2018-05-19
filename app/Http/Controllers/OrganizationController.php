@@ -85,6 +85,13 @@ class OrganizationController extends Controller
         return view('frontEnd.organizations', compact('organizations'));
     }
 
+    public function organization($id)
+    {
+        $organization = Organization::where('organization_recordid', '=', $id)->first();
+
+        return view('frontEnd.organization', compact('organization'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *

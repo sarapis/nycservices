@@ -46,6 +46,7 @@ Services
                     <th class="text-center">Schedule</th>
                     <th class="text-center">Contacts</th>
                     <th class="text-center">Details</th>
+                    <th class="text-center">Address</th>
                     <th class="text-center">Actions</th>
                 </tr>
             </thead>
@@ -87,6 +88,15 @@ Services
                       <span class="badge bg-red">{!! $detail->detail_value !!}</span>
                     @endforeach
                     </span>
+                  </td>
+
+                  <td class="text-center"><span style="white-space:normal;">
+                  @if($service->service_address!=NULL)
+                    @foreach($service->address as $address)
+                      <span class="badge bg-red">{{ $address->address_1 }}</span>
+                    @endforeach
+                    </span>
+                  @endif
                   </td>
 
                   <td class="text-center">

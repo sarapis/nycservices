@@ -34,7 +34,7 @@ class DetailController extends Controller
                 $detail = new Detail();
                 $detail->detail_recordid = $record[ 'id' ];
                 $detail->detail_value = isset($record['fields']['value'])?$record['fields']['value']:null;
-                $detail->detail_type = isset($record['fields']['type'])?$record['fields']['type']:null;
+                $detail->detail_type = isset($record['fields']['detail_type'])?$record['fields']['detail_type']:null;
                 $detail->detail_description= isset($record['fields']['description'])?$record['fields']['description']:null;
                 $detail->detail_organizations = isset($record['fields']['organizations'])? implode(",", $record['fields']['organizations']):null;
                 $detail->detail_services = isset($record['fields']['services'])? implode(",", $record['fields']['services']):null;

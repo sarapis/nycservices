@@ -24,7 +24,8 @@ ul#ui-id-1 {
     width: 260px !important;
 }
 #map{
-    position: fixed !important;
+    position: relative !important;
+    z-index: 0 !important;
 }
 </style>
 
@@ -49,9 +50,9 @@ ul#ui-id-1 {
 
                         <h4 class="panel-text"><span class="badge bg-blue">Description:</span> {!! $service->service_description !!}</h4>
 
-                        <h4 class="panel-text"><span class="badge bg-red">Phone:</span> @foreach($service->phone as $phone) {!! $phone->phone_number !!} @endforeach</h4>
+                        <h4 class="panel-text"><span class="badge bg-red">Phone:</span> @foreach($service->phone as $phone) {!! $phone->phone_number !!}, @endforeach</h4>
 
-                        <h4 class="panel-text"><span class="badge bg-blue">Url:</span> @if($service->service_url!=NULL) {{$service->service_url}} @endif</h4>
+                        <h4 class="panel-text" style="word-wrap: break-word;"><span class="badge bg-blue" >Url:</span> @if($service->service_url!=NULL) {!! $service->service_url !!} @endif</h4>
 
                         @if($service->service_email!=NULL) 
                         <h4 class="panel-text"><span class="badge bg-blue">Email:</span> {{$service->service_email}}</h4>
@@ -62,12 +63,46 @@ ul#ui-id-1 {
                         <h3>Additional Info</h3>
 
                         <h4 class="panel-text"><span class="badge bg-blue">Application Process:</span> {!! $service->service_application_process !!}</h4>
+
+                        <h4 class="panel-text"><span class="badge bg-blue">Wait Time:</span> {{$service->service_wait_time}}</h4>
+
+                        <h4 class="panel-text"><span class="badge bg-blue">Fees:</span> {{$service->service_fees}}</h4>
+
+                        <h4 class="panel-text"><span class="badge bg-blue">Accreditations:</span> {{$service->service_accreditations}}</h4>
+
+                        <h4 class="panel-text"><span class="badge bg-blue">Licenses:</span> {{$service->service_licenses}}</h4>
                     </div>
                 </div>
             </div>
             
             <div class="col-md-4 p-0">
                 <div id="map" style="position: fixed !important;width: 28%;"></div>
+                <hr>
+                @if($service->service_address!=NULL)
+                <h4><span class="badge bg-blue">Address:</span>
+                    
+                        @foreach($service->address as $address)
+                           <br>{{ $address->address_1 }}, {{ $address->address_city }}, {{ $address->address_state_province }}, {{ $address->address_postal_code }}
+                        @endforeach
+                    
+                </h4>
+                @endif
+                @if($service->service_contacts!=NULL)
+                <h4><span class="badge bg-red">Contact:</span>
+                  
+                    {{$service->contact()->first()->contact_name}}
+                
+                </h4>
+                @endif
+
+                <h3>Details</h3>
+                @if($service->service_details!=NULL)
+                
+                  @foreach($service->detail as $detail)
+                    <h4><span class="badge bg-red">{{ $detail->detail_type }}:</span> {!! $detail->detail_value !!}</h4>
+                  @endforeach
+ 
+                @endif
             </div>
         </div>
     </div>
@@ -89,24 +124,43 @@ ul#ui-id-1 {
     });
 </script>
 <script>
-    var value = <?php print_r(json_encode($location)) ?>;
-    console.log(value);
+    var locations = <?php print_r(json_encode($location)) ?>;
+    var show = 1;
+    if(locations.length == 0){
+      show = 0;
+      locations[0] = {};
+      locations[0].location_latitude = 40.730981;
+      locations[0].location_longitude = -73.998107;
+    }
 
+    var sumlat = 0.0;
+    var sumlng = 0.0;
+    for(var i = 0; i < locations.length; i ++)
+    {
+        sumlat += parseFloat(locations[i].location_latitude);
+        sumlng += parseFloat(locations[i].location_longitude);
+
+    }
+    var avglat = sumlat/locations.length;
+    var avglng = sumlng/locations.length;
     var mymap = new GMaps({
       el: '#map',
-      lat: value.location_latitude,
-      lng: value.location_longitude,
-      zoom:13
+      lat: avglat,
+      lng: avglng,
+      zoom:10
     });
 
-     mymap.addMarker({
-      lat: value.location_latitude,
-      lng: value.location_longitude,
-      infoWindow: {
-          maxWidth: 250,
-          content: ('<span style="color:#424242;font-weight:500;font-size:14px;">'+value.organization.organization_name+'<br>'+value.address.address_1+', '+value.address.address_city+', '+value.address.address_state_province+', '+value.address.address_postal_code+'</span>')
-      }
-    });
+    if(show == 1){
+      $.each( locations, function(index, value ){
+          mymap.addMarker({
+              lat: value.location_latitude,
+              lng: value.location_longitude,
+              title: value.city,
+                     
+              
+          });
+     });
+    }
 
 
 

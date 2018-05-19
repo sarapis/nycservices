@@ -44,7 +44,13 @@ ul#ui-id-1 {
                         <a class="panel-link" href="/service_{{$service->service_recordid}}">{{$service->service_name}}</a>
                         <h4>Provided by: {{$service->organization()->first()->organization_name}}</h4>
                         <h4><span class="badge bg-red">Phone:</span> @foreach($service->phone as $phone) {!! $phone->phone_number !!} @endforeach</h4>
-                        <h4><span class="badge bg-blue">Address:</span> @if($service->service_contacts!=NULL) {{$service->contact()->first()->contact_name}} @endif</h4>
+                        <h4><span class="badge bg-blue">Address:</span>
+                            @if($service->service_address!=NULL)
+                                @foreach($service->address as $address)
+                                  {{ $address->address_1 }}
+                                @endforeach
+                            @endif
+                        </h4>
                         <h4><span class="badge bg-blue">Description:</span> {!! str_limit($service->service_description, 200) !!}</h4>
                     </div>
                 </div>

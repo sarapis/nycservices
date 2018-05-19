@@ -32,6 +32,7 @@ Route::get('/services', 'ServiceController@services');
 Route::get('/service_{id}', 'ServiceController@service');
 
 Route::get('/organizations', 'OrganizationController@organizations');
+Route::get('/organization_{id}', 'OrganizationController@organization');
 
 // Route::post('/explore', 'ExploreController@index');
 Route::get('/profile/{id}', 'ExploreController@profile');

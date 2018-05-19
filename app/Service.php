@@ -49,4 +49,9 @@ class Service extends Model
     {
         return $this->hasmany('App\Detail', 'detail_services', 'service_recordid');
     }
+
+    public function address()
+    {
+        return $this->hasmany('App\Address', 'address_services', 'service_recordid');
+    }
 }

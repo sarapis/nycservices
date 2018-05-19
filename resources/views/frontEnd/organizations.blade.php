@@ -40,7 +40,7 @@ ul#ui-id-1 {
                 @foreach($organizations as $organization)
                 <div class="panel content-panel">
                     <div class="panel-body p-20">
-                        <h4>{{$organization->organization_name}}</h4>
+                        <a class="panel-link" href="/organization_{{$organization->organization_recordid}}">{{$organization->organization_name}}</a>
                         <h4>Number of Services: @if($organization->organization_services!=null)
                           {{sizeof(explode(",", $organization->organization_services))}}
                             @else 0 @endif</h4>

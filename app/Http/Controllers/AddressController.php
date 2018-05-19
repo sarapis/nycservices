@@ -43,6 +43,7 @@ class AddressController extends Controller
                 $address->address_attention = isset($record['fields']['attention'])?$record['fields']['attention']:null;
                 $address->address_type = isset($record['fields']['address_type'])? implode(",", $record['fields']['address_type']):null;
                 $address->address_locations = isset($record['fields']['locations'])? implode(",", $record['fields']['locations']):null;
+                $address->address_services = isset($record['fields']['services'])? implode(",", $record['fields']['services']):null;
                 $address ->save();
 
             }

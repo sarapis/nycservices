@@ -53,11 +53,12 @@ class ServiceController extends Controller
                 $service->service_wait_time = isset($record['fields']['wait_time'])?$record['fields']['wait_time']:null;
                 $service->service_fees = isset($record['fields']['fees'])?$record['fields']['fees']:null;
                 $service->service_accreditations = isset($record['fields']['accreditations'])?$record['fields']['accreditations']:null;
-                $service->service_licenses = isset($record['fields']['licenses'])?$record['fields']['licenses']:0;
+                $service->service_licenses = isset($record['fields']['licenses'])?$record['fields']['licenses']:null;
                 $service->service_phones = isset($record['fields']['phones'])? implode(",", $record['fields']['phones']):null;
                 $service->service_schedule = isset($record['fields']['schedule'])? implode(",", $record['fields']['schedule']):null;
                 $service->service_contacts = isset($record['fields']['contacts'])? implode(",", $record['fields']['contacts']):null;
                 $service->service_details = isset($record['fields']['details'])? implode(",", $record['fields']['details']):null;
+                $service->service_address = isset($record['fields']['address'])? implode(",", $record['fields']['address']):null;
                 $service->service_metadata = isset($record['fields']['metadata'])? $record['fields']['metadata']:null;              
                 
                 $service ->save();
@@ -93,7 +94,7 @@ class ServiceController extends Controller
     public function service($id)
     {
         $service = Service::where('service_recordid', '=', $id)->first();
-        $location = Location::with('organization', 'address')->where('location_services', '=', $id)->first();
+        $location = Location::with('organization', 'address')->where('location_services', '=', $id)->get();
 
         return view('frontEnd.service', compact('service', 'location'));
     }
