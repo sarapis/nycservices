@@ -43,6 +43,7 @@ a, a:hover, a:focus {
 .wrapper {
     display: flex;
     align-items: stretch;
+    min-height: calc(100%-68px);
 }
 .ui-slider-handle{
   -ms-touch-action: none;
@@ -494,6 +495,9 @@ p{
   .page{
   padding-top: 50px;
   } 
+  .ticker{
+    display: none;
+  }
 }
 .collapse.navbar-collapse.navbar-collapse-toolbar.show{
   border: 0;
@@ -701,7 +705,7 @@ p{
   padding: 0 !important;
 }
 .ticker {
-  width: 400px;
+  width: 20%;
   background-color:transparent;
   color:#fff;
   border: 0;

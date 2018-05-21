@@ -7,7 +7,7 @@
         title="{{$layout->site_name}}">
       </a>
       <a class="navbar-brand" href="/">{{$layout->site_name}}</a>
-       <div class="navbar-brand ticker well">
+       <div class="navbar-brand ticker well ml-10 mr-10">
         <span>{{$layout->tagline}}</span>
       </div>
       <!-- <a class="navbar-brand nav-item nav-link mr-0 pl-0 pr-5" href="/explore">Explore</a>
