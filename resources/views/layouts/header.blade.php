@@ -7,7 +7,9 @@
         title="{{$layout->site_name}}">
       </a>
       <a class="navbar-brand" href="/">{{$layout->site_name}}</a>
-      
+       <div class="navbar-brand ticker well">
+        <span>{{$layout->tagline}}</span>
+      </div>
       <!-- <a class="navbar-brand nav-item nav-link mr-0 pl-0 pr-5" href="/explore">Explore</a>
       <a class="navbar-brand nav-item nav-link mr-0 pl-0 pr-5" href="/about">About</a>
       <a class="navbar-brand nav-item nav-link mr-0 pl-0 pr-5" href="https://www.participatorybudgeting.org/donate/" target="_blank">Donate</a>
@@ -76,3 +78,11 @@
     </div>
 
   </nav>
+<style type="text/css">
+  .ticker {
+    width: 400px;
+    background-color:transparent;
+    color:#fff;
+    border: 0;
+  }
+</style>

@@ -87,16 +87,18 @@ ul#ui-id-1 {
 </script>
 <script>
     
+    var locations = <?php print_r(json_encode($locations)) ?>;
+    console.log(locations);
     var sumlat = 0.0;
     var sumlng = 0.0;
-    for(var i = 0; i < locations['data'].length; i ++)
+    for(var i = 0; i < locations.length; i ++)
     {
-        sumlat += parseFloat(locations['data'][i].latitude);
-        sumlng += parseFloat(locations['data'][i].longitude);
+        sumlat += parseFloat(locations[i].location_latitude);
+        sumlng += parseFloat(locations[i].location_longitude);
 
     }
-    var avglat = sumlat/locations['data'].length;
-    var avglng = sumlng/locations['data'].length;
+    var avglat = sumlat/locations.length;
+    var avglng = sumlng/locations.length;
     var mymap = new GMaps({
       el: '#map',
       lat: avglat,
@@ -105,25 +107,16 @@ ul#ui-id-1 {
     });
 
 
-    $.each( locations['data'], function(index, value ){
-        var icon;
-        if(value.project_status_category == "Complete")
-            icon = '<button type="button" class="btn btn-floating btn-success btn-xs waves-effect waves-classic mr-5" style="box-shadow:none;"><i class="icon fa-check" aria-hidden="true"></i></button>';
-        else if(value.project_status_category == "Project Status Needed")
-            icon = '<button type="button" class="btn btn-floating  btn-xs waves-effect waves-classic mr-5" style="box-shadow:none;"></button>';
-        else if(value.project_status_category == "Not funded")
-            icon = '<button type="button" class="btn btn-floating btn-danger btn-xs waves-effect waves-classic mr-5" style="box-shadow:none;"><i class="icon fa-remove" aria-hidden="true"></i></button>';
-        else
-            icon ='<button type="button" class="btn btn-floating btn-warning btn-xs waves-effect waves-classic mr-5" style="box-shadow:none;"><i class="icon fa-minus" aria-hidden="true"></i></button>';
+    $.each( locations, function(index, value ){
 
         mymap.addMarker({
-            lat: value.latitude,
-            lng: value.longitude,
+            lat: value.location_latitude,
+            lng: value.location_longitude,
             title: value.city,
                    
             infoWindow: {
                 maxWidth: 250,
-                content: ('<a href="/profile/'+value.id+'" style="color:#424242;font-weight:500;font-size:14px;">'+icon+value.project_title+'</a>')
+                content: ('<a href="/service_'+value.service.service_recordid+'" style="color:#424242;font-weight:500;font-size:14px;">'+value.service.service_name+'<br>'+value.organization.organization_name+'</a>')
             }
         });
    });

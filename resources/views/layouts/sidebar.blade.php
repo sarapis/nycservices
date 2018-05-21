@@ -5,10 +5,14 @@
         <div class="form-group" style="margin: 0;">
         <!--begin::Form-->
             <div class="mb-5">
-                <div class="input-search">
+
+                <form action="/find" method="POST" class="input-search">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <i class="input-search-icon md-search" aria-hidden="true"></i>
-                    <input type="text" class="form-control search-form" name="search" placeholder="Search for Projects" id="search_address">
-                </div>
+                    <input type="text" class="form-control search-form" name="find" placeholder="Search for Projects" id="search_address">
+                    
+                </form>
+                
             </div>
         </div>
     </div>

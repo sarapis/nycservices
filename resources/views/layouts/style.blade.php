@@ -55,8 +55,12 @@
 <!--   <script src="../../../frontend/global/vend/jquery/jquery.js"></script> -->
  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-
-
+<script type="text/javascript" src="../../js/jquery.jticker.js"></script>
+<script type="text/javascript">
+      jQuery(function($) {
+        $('.ticker').jTicker();
+      });
+    </script>
   <script src="../../../frontend/global/vend/breakpoints/breakpoints.js"></script>
   <script>
   Breakpoints();

@@ -8,6 +8,7 @@ use App\Layout;
 use App\Service;
 use App\Organization;
 use App\Taxonomy;
+use App\Location;
 use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
@@ -56,8 +57,9 @@ class HomeController extends Controller
                 })->orwhereHas('taxonomy', function ($q)  use($search){
                     $q->where('taxonomy_name', 'like', '%'.$search.'%');
                 })->paginate(10);
+        $locations = Location::with('service','organization')->get();
 
         // $services =Service::where('service_name',  'like', '%'.$search.'%')->get();
-        return view('frontEnd.find', compact('services'));
+        return view('frontEnd.services', compact('services','locations'));
     }
 }
