@@ -95,7 +95,7 @@ $('#widget').draggable();
     // }); 
 
 </script> -->
-  <script type="text/javascript">
+  <!-- <script type="text/javascript">
 
 
       $(document).ready(function () {
@@ -327,5 +327,5 @@ $('#widget').draggable();
             });
           }
       });
-  </script>
+  </script> -->
 
