@@ -20,7 +20,7 @@
                 <ul class="collapse list-unstyled option-ul" id="projectcategory">
                     @foreach($taxonomies as $taxonomy)
                         
-                        <li class="option-li">{{$taxonomy->taxonomy_name}}</li>
+                        <li class="option-li"><a href="category_{{$taxonomy->taxonomy_recordid}}" class="option-record">{{$taxonomy->taxonomy_name}}</a></li>
                        
                     @endforeach
                 </ul>
@@ -30,7 +30,7 @@
                 <ul class="collapse list-unstyled option-ul" id="cityagency">
                     @foreach($organizations as $organization)
                         
-                        <li class="option-li">{{$organization->organization_name}}</li>
+                        <li class="option-li"><a href="organization_{{$organization->organization_recordid}}" class="option-record">{{$organization->organization_name}}</a></li>
                        
                     @endforeach
                 </ul>

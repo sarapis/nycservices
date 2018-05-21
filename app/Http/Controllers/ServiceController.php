@@ -99,6 +99,14 @@ class ServiceController extends Controller
         return view('frontEnd.service', compact('service', 'location'));
     }
 
+    public function taxonomy($id)
+    {
+        $services = Service::where('service_taxonomy', '=', $id)->orderBy('service_name')->paginate(10);
+        $locations = Location::with('service','organization')->get();
+
+        return view('frontEnd.services', compact('services', 'locations'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *

@@ -697,3 +697,6 @@ p{
   color: #428bca;
   cursor: pointer;
 }
+.option-record{
+  padding: 0 !important;
+}

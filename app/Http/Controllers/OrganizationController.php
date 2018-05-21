@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Functions\Airtable;
 use App\Organization;
+use App\Location;
 use App\Airtables;
 
 class OrganizationController extends Controller
@@ -88,8 +89,9 @@ class OrganizationController extends Controller
     public function organization($id)
     {
         $organization = Organization::where('organization_recordid', '=', $id)->first();
+        $locations = Location::with('service')->where('location_organization', '=', $id)->get();
 
-        return view('frontEnd.organization', compact('organization'));
+        return view('frontEnd.organization', compact('organization', 'locations'));
     }
 
     /**
