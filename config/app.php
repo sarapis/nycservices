@@ -246,9 +246,9 @@ return [
         'Reminder'   => Cartalyst\Sentinel\Laravel\Facades\Reminder::class,
         'Sentinel'   => Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
         'Image' => Intervention\Image\Facades\Image::class,
-        // 'Geolocation' => Stevebauman\Location\Facades\Location::class,
+        'Geolocation' => Stevebauman\Location\Facades\Location::class,
 
-        'GeoLocation' => Midnite81\GeoLocation\Facades\GeoLocation::class,
+        // 'GeoLocation' => Midnite81\GeoLocation\Facades\GeoLocation::class,
 
     ],
 

@@ -11,8 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
-
-use Midnite81\GeoLocation\Contracts\Services\GeoLocation;
+use Geolocation;
 
 class ExploreController extends Controller
 {
@@ -20,28 +19,10 @@ class ExploreController extends Controller
     public function geolocation(Request $request)
     {
         $ip= \Request::ip();
+        echo $ip;
         $data = \Geolocation::get($ip);
         dd($data);
     }
-
-    public function geo(GeoLocation $geo, Request $request) 
-    {
-        $ipLocation = $geo->getCity($request->ip());
-        
-        // if you do $geo->get($request->ip()), the default precision is now city
-
-        // $ipLocation is an IpLocation Object
-        
-        echo $ipLocation->ipAddress; // e.g. 127.0.0.1
-        
-        echo $ipLocation->getAddressString(); // e.g. London, United Kingdom
-        
-        // the object has a toJson() and toArray() method on it 
-        // so you can die and dump an array.
-        dd($ipLocation->toArray()); 
-
-    }
-
 
     public function index(Request $request)
     {
