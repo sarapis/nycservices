@@ -36,6 +36,8 @@ Route::get('/organization_{id}', 'OrganizationController@organization');
 
 Route::get('/category_{id}', 'ServiceController@taxonomy');
 
+Route::get('/geolocation', 'ExploreController@geolocation');
+
 // Route::post('/explore', 'ExploreController@index');
 Route::get('/profile/{id}', 'ExploreController@profile');
 Route::get('/explore/status_{id}', 'ExploreController@status');

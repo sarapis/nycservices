@@ -11,9 +11,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
+use GeoLocation;
 
 class ExploreController extends Controller
 {
+
+    public function geolocation(Request $request)
+    {
+        $ip= \Request::ip();
+        $data = \GeoLocation::get($ip);
+        dd($data);
+    }
     public function index(Request $request)
     {
             $districts = District::orderBy('name')->get();
