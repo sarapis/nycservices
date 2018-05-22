@@ -13,6 +13,7 @@
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.4",
+        "midnite81/geolocation": "^1.0",
         "roland/crud": "dev-master",
         "stevebauman/location": "^3.0"
     },

@@ -189,7 +189,9 @@ return [
 
         Intervention\Image\ImageServiceProvider::class,
 
-        Stevebauman\Location\LocationServiceProvider::class
+        Stevebauman\Location\LocationServiceProvider::class,
+
+        Midnite81\GeoLocation\GeoLocationServiceProvider::class
     ],
 
     /*
@@ -244,7 +246,9 @@ return [
         'Reminder'   => Cartalyst\Sentinel\Laravel\Facades\Reminder::class,
         'Sentinel'   => Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
         'Image' => Intervention\Image\Facades\Image::class,
-        'GeoLocation' => Stevebauman\Location\Facades\Location::class,
+        // 'Geolocation' => Stevebauman\Location\Facades\Location::class,
+
+        'GeoLocation' => Midnite81\GeoLocation\Facades\GeoLocation::class,
 
     ],
 
