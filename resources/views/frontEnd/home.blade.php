@@ -65,7 +65,7 @@ Home
                               
                                 <div class="input-search">
                                     <i class="input-search-icon md-search" aria-hidden="true"></i>
-                                    <input id="location" type="text" class="form-control text-black" name="address" placeholder="Search Street Address" style="border-radius:0;">
+                                    <input id="location" type="text" class="form-control text-black" name="address" placeholder="Search Address" style="border-radius:0;">
                                 </div>
                               
                           </div>

@@ -17,7 +17,21 @@
         </div>
     </div>
 
-       <ul class="list-unstyled components pt-0">    
+       <ul class="list-unstyled components pt-0"> 
+
+            <li class="option-side">
+                <!--begin::Form-->
+                <form method="get" class="mb-5" id="search_location">
+                    <div class="input-search">
+                        <i class="input-search-icon md-search" aria-hidden="true"></i>
+                        <input id="location" type="text" class="form-control search-form" name="address" placeholder="Search Address">
+                    </div>
+                </form>
+            </li>
+
+            <li class="option-side">
+                <button class="btn btn-block waves-effect waves-classic" style="padding: 0;background: #b8e6e2;"><a href="/services_near_me" style="display: block;">Services near me</a></button>
+            </li> 
                     
             <li class="option-side">
                 <a href="#projectcategory" class="text-side" data-toggle="collapse" aria-expanded="false">Category</a>

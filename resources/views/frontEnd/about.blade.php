@@ -31,17 +31,18 @@ About
             <div class="panel">
                 <div class="panel-body bg-custom">
                     <div class="form-group">
-                        <h4 class="text-white">Does your NYC neighborhood do PB?</h4>
+                        <h4 class="text-white">Find Services Near an Address?</h4>
                         <form method="get" action="/explore">
                           <div class="form-group">
                               
                                 <div class="input-search">
                                     <i class="input-search-icon md-search" aria-hidden="true"></i>
-                                    <input id="location" type="text" class="form-control text-black" name="address" placeholder="Search Street Address" style="border-radius:0;">
+                                    <input id="location" type="text" class="form-control text-black" name="address" placeholder="Search Address" style="border-radius:0;">
                                 </div>
                               
                           </div>
-                          <button type="submit" class="btn_findout"><h4 class="text-white mb-0">FIND OUT!</h4></button>
+                          <button type="submit" class="btn_findout"><h4 class="text-white mb-0">Search</h4></button>
+                           <a href="/services_near_me" class="btn_findout pull-right"><h4 class="text-white mb-0">Services Near Me</h4></a>
                         </form>
                     </div>
                 </div>
