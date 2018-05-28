@@ -31,7 +31,7 @@
             </li>
 
             <li class="option-side">
-                <button class="btn btn-block waves-effect waves-classic" style="padding: 0;background: #b8e6e2;"><a href="/services_near_me" style="display: block;">Services near me</a></button>
+                <button class="btn btn-block waves-effect waves-classic" style="padding: 0;background: #b8e6e2;"><a href="/services_near_me" style="display: block;padding-left: 10px;">Services Near Me</a></button>
             </li> 
                     
             <li class="option-side">
