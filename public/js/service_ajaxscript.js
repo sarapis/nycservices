@@ -23,7 +23,7 @@ $(document).ready(function(){
             url: url + '/' + id,
             success: function (data) {
                 // console.log(data);
-                $('#id').val(data.id);
+                $('#id').val(data.service_recordid);
                 $('#service_name').val(data.service_name);
                 $('#service_alternate_name').val(data.service_alternate_name);
                 $('#service_description').val(data.service_description);

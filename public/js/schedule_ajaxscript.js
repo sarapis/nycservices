@@ -15,16 +15,16 @@ $(document).ready(function(){
 
     //display modal form for product EDIT ***************************
     $(document).on('click','.open_modal',function(e){
-        var product_id = $(this).val();
+        var id = $(this).val();
         e.preventDefault(); 
 
         // Populate Data in Edit Modal Form
         $.ajax({
             type: "GET",
-            url: url + '/' + product_id,
+            url: url + '/' + id,
             success: function (data) {
                 // console.log(data);
-                $('#id').val(data.id);
+                $('#id').val(data.schedule_recordid);
                 $('#schedule_days_of_week').val(data.schedule_days_of_week);
                 $('#schedule_opens_at').val(data.schedule_opens_at);
                 $('#schedule_closes_at').val(data.schedule_closes_at);

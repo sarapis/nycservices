@@ -23,7 +23,7 @@ $(document).ready(function(){
             url: url + '/' + id,
             success: function (data) {
                 // console.log(data);
-                $('#id').val(data.id);
+                $('#id').val(data.taxonomy_recordid);
                 $('#taxonomy_name').val(data.taxonomy_name);
                 $('#taxonomy_vocabulary').val(data.taxonomy_vocabulary);
                 $('#taxonomy_x_description').val(data.taxonomy_x_description);

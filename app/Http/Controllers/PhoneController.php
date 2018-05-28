@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Functions\Airtable;
 use App\Phone;
 use App\Airtables;
+use App\Services\Stringtoint;
 
 class PhoneController extends Controller
 {
@@ -32,10 +33,41 @@ class PhoneController extends Controller
             foreach ( $airtable_response['records'] as $record ) {
 
                 $phone = new Phone();
+                $strtointclass = new Stringtoint();
                 $phone->phone_recordid = $record[ 'id' ];
+                $phone->phone_recordid = $strtointclass->string_to_int($record[ 'id' ]);
                 $phone->phone_number = isset($record['fields']['number'])?$record['fields']['number']:null;
-                $phone->phone_locations = isset($record['fields']['locations'])? implode(",", $record['fields']['locations']):null;
-                $phone->phone_services = isset($record['fields']['services'])? implode(",", $record['fields']['services']):null;
+
+
+                if(isset($record['fields']['locations'])){
+                    $i = 0;
+                    foreach ($record['fields']['locations']  as  $value) {
+
+                        $phonelocation=$strtointclass->string_to_int($value);
+
+                        if($i != 0)
+                            $phone->phone_locations = $phone->phone_locations. ','. $phonelocation;
+                        else
+                            $phone->phone_locations = $phonelocation;
+                        $i ++;
+                    }
+                }
+
+
+                if(isset($record['fields']['services'])){
+                    $i = 0;
+                    foreach ($record['fields']['services']  as  $value) {
+
+                        $phoneservice=$strtointclass->string_to_int($value);
+
+                        if($i != 0)
+                            $phone->phone_services = $phone->phone_services. ','. $phoneservice;
+                        else
+                            $phone->phone_services = $phoneservice;
+                        $i ++;
+                    }
+                }
+
                 $phone->phone_organizations = isset($record['fields']['organizations'])? implode(",", $record['fields']['organizations']):null;
                 $phone->phone_contacts = isset($record['fields']['contacts'])? implode(",", $record['fields']['contacts']):null;
                 $phone->phone_extension = isset($record['fields']['extension'])?$record['fields']['extension']:null;
@@ -97,8 +129,8 @@ class PhoneController extends Controller
      */
     public function show($id)
     {
-        $agency= Phone::find($id);
-        return response()->json($agency);
+        $phone= Phone::find($id);
+        return response()->json($phone);
     }
 
     /**

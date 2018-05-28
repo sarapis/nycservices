@@ -59,16 +59,7 @@ ul#ui-id-1 {
         </div>
     </div>
 </div>
-<script>
- $(document).ready(function () {
-   
-    if( address_district != ''){
-    
-        $('#btn-district span').html("District: "+address_district);
-        $('#btn-district').show();
-    };
-});
-</script>
+
 <script>
     $(document).ready(function(){
         if(screen.width < 768){
@@ -84,49 +75,7 @@ ul#ui-id-1 {
         }
     });
 </script>
-<script>
-    
-    var sumlat = 0.0;
-    var sumlng = 0.0;
-    for(var i = 0; i < locations['data'].length; i ++)
-    {
-        sumlat += parseFloat(locations['data'][i].latitude);
-        sumlng += parseFloat(locations['data'][i].longitude);
 
-    }
-    var avglat = sumlat/locations['data'].length;
-    var avglng = sumlng/locations['data'].length;
-    var mymap = new GMaps({
-      el: '#map',
-      lat: avglat,
-      lng: avglng,
-      zoom:10
-    });
-
-
-    $.each( locations['data'], function(index, value ){
-        var icon;
-        if(value.project_status_category == "Complete")
-            icon = '<button type="button" class="btn btn-floating btn-success btn-xs waves-effect waves-classic mr-5" style="box-shadow:none;"><i class="icon fa-check" aria-hidden="true"></i></button>';
-        else if(value.project_status_category == "Project Status Needed")
-            icon = '<button type="button" class="btn btn-floating  btn-xs waves-effect waves-classic mr-5" style="box-shadow:none;"></button>';
-        else if(value.project_status_category == "Not funded")
-            icon = '<button type="button" class="btn btn-floating btn-danger btn-xs waves-effect waves-classic mr-5" style="box-shadow:none;"><i class="icon fa-remove" aria-hidden="true"></i></button>';
-        else
-            icon ='<button type="button" class="btn btn-floating btn-warning btn-xs waves-effect waves-classic mr-5" style="box-shadow:none;"><i class="icon fa-minus" aria-hidden="true"></i></button>';
-
-        mymap.addMarker({
-            lat: value.latitude,
-            lng: value.longitude,
-            title: value.city,
-                   
-            infoWindow: {
-                maxWidth: 250,
-                content: ('<a href="/profile/'+value.id+'" style="color:#424242;font-weight:500;font-size:14px;">'+icon+value.project_title+'</a>')
-            }
-        });
-   });
-</script>
 @endsection
 
 

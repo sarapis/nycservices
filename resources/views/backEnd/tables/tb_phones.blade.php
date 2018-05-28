@@ -44,8 +44,15 @@ Phones
                   <td>{!! str_limit($phone->phone_number, 10) !!}</td>
 
                   <td>
-                    @if($phone->phone_locations!='')<span class="badge bg-green">{{$phone->location()->first()->location_name}}</span>@endif
-                  </td>
+                    @if($phone->phone_locations!='') 
+                  
+                      @foreach($phone->locations as $location)
+                        
+                      <span class="badge bg-purple">{{$location->location_name}}</span>
+                      
+                      @endforeach
+                           
+                    @endif
 
                   <td>{{$phone->phone_extension}}</td>
 
@@ -56,7 +63,7 @@ Phones
                   <td>{{$phone->phone_description}}</td>
 
                   <td class="text-center">
-                    <button class="btn btn-block btn-primary btn-sm open_modal"  value="{{$phone->id}}" style="width: 80px;"><i class="fa fa-fw fa-edit"></i>Edit</button>
+                    <button class="btn btn-block btn-primary btn-sm open_modal"  value="{{$phone->phone_recordid}}" style="width: 80px;"><i class="fa fa-fw fa-edit"></i>Edit</button>
                   </td>
                 </tr>
               @endforeach             

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Project;
+use App\Service;
 use App\District;
 use App\Contact;
 use Illuminate\Database\Eloquent\Model;
@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
 use Geolocation;
+use Geocode;
+use App\Location;
 
 class ExploreController extends Controller
 {
@@ -19,11 +21,50 @@ class ExploreController extends Controller
     public function geolocation(Request $request)
     {
         $ip= \Request::ip();
-        echo $ip;
+        // echo $ip;
         $data = \Geolocation::get($ip);
-        dd($data);
+
+
+        // $auth = new Location();
+        // $locations = $auth->geolocation(40.573414, -73.987818);
+        // var_dump($locations);
+
+
+        $lat =(int)$data->latitude;
+        $lng =(int)$data->longitude;
+
+        $locations = Location::with('services', 'organization')->select(DB::raw('*, ( 3959 * acos( cos( radians('.$lat.') ) * cos( radians( location_latitude ) ) * cos( radians( location_longitude ) - radians('.$lng.') ) + sin( radians('.$lat.') ) * sin( radians( location_latitude ) ) ) ) AS distance'))
+        ->having('distance', '<', 2)
+        ->orderBy('distance')
+        ->get();
+
+        $services = [];
+        foreach ($locations as $key => $location) {
+            
+            $values = Service::where('service_locations', 'like', '%'.$location->location_recordid.'%')->get();
+            foreach ($values as $key => $value) {
+                $services[] = $value;
+            }
+        }
+        
+        return view('frontEnd.near', compact('services','locations'));
     }
 
+    public function geocode(Request $request)
+    {
+        $ip= \Request::ip();
+        $response = Geocode::make()->address('1365 Jerome Avenue');
+
+        if ($response) {
+            echo $response->latitude();
+            echo $response->longitude();
+            echo $response->formattedAddress();
+            echo $response->locationType();
+    //         echo $response->raw()->address_components[8]['types'][0];
+    // echo $response->raw()->address_components[8]['long_name'];
+           dd($response);
+        }
+    }
     public function index(Request $request)
     {
             $districts = District::orderBy('name')->get();

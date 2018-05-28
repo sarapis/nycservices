@@ -8,6 +8,7 @@ use App\Functions\Airtable;
 use App\Organization;
 use App\Location;
 use App\Airtables;
+use App\Services\Stringtoint;
 
 class OrganizationController extends Controller
 {
@@ -33,7 +34,8 @@ class OrganizationController extends Controller
             foreach ( $airtable_response['records'] as $record ) {
 
                 $organization = new Organization();
-                $organization->organization_recordid = $record[ 'id' ];
+                $strtointclass = new Stringtoint();
+                $organization->organization_recordid= $strtointclass->string_to_int($record[ 'id' ]);
                 $organization->organization_name = isset($record['fields']['name'])?$record['fields']['name']:null;
                 $organization->organization_alternate_name = isset($record['fields']['alternate_name'])?$record['fields']['alternate_name']:null;
                 $organization->organization_x_uid = isset($record['fields']['x-uid'])?$record['fields']['x-uid']:null;
@@ -49,11 +51,45 @@ class OrganizationController extends Controller
                 $organization->organization_tax_status = isset($record['fields']['tax_status'])?$record['fields']['tax_status']:null;
                 $organization->organization_tax_id = isset($record['fields']['tax_id'])?$record['fields']['tax_id']:null;
                 $organization->organization_year_incorporated = isset($record['fields']['year_incorporated'])?$record['fields']['year_incoporated']:null;
-                $organization->organization_services = isset($record['fields']['services'])? implode(",", $record['fields']['services']):null;
+
+                if(isset($record['fields']['services'])){
+                    $i = 0;
+                    foreach ($record['fields']['services']  as  $value) {
+
+                        $organizationservice=$strtointclass->string_to_int($value);
+
+                        if($i != 0)
+                            $organization->organization_services = $organization->organization_services. ','. $organizationservice;
+                        else
+                            $organization->organization_services = $organizationservice;
+                        $i ++;
+                    }
+                }
+
                 $organization->organization_phones = isset($record['fields']['phones'])? implode(",", $record['fields']['phones']):null;
-                $organization->organization_locations = isset($record['fields']['locations']) ?implode(",", $record['fields']['locations']):null;
+                
+
+                if(isset($record['fields']['locations'])){
+                    $i = 0;
+                    foreach ($record['fields']['locations']  as  $value) {
+
+                        $organizationlocation=$strtointclass->string_to_int($value);
+
+                        if($i != 0)
+                            $organization->organization_locations = $organization->organization_locations. ','. $organizationlocation;
+                        else
+                            $organization->organization_locations = $organizationlocation;
+                        $i ++;
+                    }
+                }
                 $organization->organization_contact = isset($record['fields']['contact']) ?implode(",", $record['fields']['contact']):null;
+
+                $organization->organization_contact = $strtointclass->string_to_int($organization->organization_contact);
+
                 $organization->organization_details = isset($record['fields']['details']) ?implode(",", $record['fields']['details']):null;
+
+                $organization->organization_details = $strtointclass->string_to_int($organization->organization_details);
+
                 $organization ->save();
 
             }
@@ -89,7 +125,7 @@ class OrganizationController extends Controller
     public function organization($id)
     {
         $organization = Organization::where('organization_recordid', '=', $id)->first();
-        $locations = Location::with('service')->where('location_organization', '=', $id)->get();
+        $locations = Location::with('services', 'address')->where('location_organization', '=', $id)->get();
 
         return view('frontEnd.organization', compact('organization', 'locations'));
     }

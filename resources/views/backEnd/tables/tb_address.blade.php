@@ -1,6 +1,6 @@
 @extends('backLayout.app')
 @section('title')
-Locations
+Address
 @stop
 <style>
     tr.modified{
@@ -38,6 +38,7 @@ Locations
                     <th class="text-center">Attention</th>
                     <th class="text-center">Address type</th>
                     <th class="text-center">Locations</th>
+                    <th class="text-center">Services</th>
                     <th class="text-center">Actions</th>
                 </tr>
             </thead>
@@ -63,13 +64,24 @@ Locations
 
                   <td class="text-center"><span class="badge bg-purple">{{$address->address_type}}</span></td>
 
-                  <td class="text-center">@if($address->address_locations!='')
-                    <span class="badge bg-red">{{$address->location()->first()->location_name}}</span>
-                  @endif
+                  <td class="text-center"><span style="white-space:normal;">
+                  @if($address->address_locations!='')
+                    @foreach($address->locations as $location)
+                      <span class="badge bg-red">{{ $location->location_name }}</span>
+                    @endforeach
+                  @endif</span>
+                  </td>
+
+                  <td class="text-center"><span style="white-space:normal;">
+                  @if($address->address_services!='')
+                    @foreach($address->services as $service)
+                      <span class="badge bg-blue">{{ $service->service_name }}</span>
+                    @endforeach
+                  @endif</span>
                   </td>
 
                   <td class="text-center">
-                    <button class="btn btn-block btn-primary btn-sm open_modal"  value="{{$address->id}}" style="width: 80px;"><i class="fa fa-fw fa-edit"></i>Edit</button>
+                    <button class="btn btn-block btn-primary btn-sm open_modal"  value="{{$address->address_recordid}}" style="width: 80px;"><i class="fa fa-fw fa-edit"></i>Edit</button>
                   </td>
                 </tr>
               @endforeach             

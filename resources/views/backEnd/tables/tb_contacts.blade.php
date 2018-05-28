@@ -50,7 +50,7 @@ Contacts
                   <td class="text-center">{{$contact->contact_email}}</td>
                   <td class="text-center">@if($contact->contact_phones!='')<span class="badge bg-purple">{{$contact->phone()->first()->phone_number}}</span>@endif</td>
                   <td>
-                    <button class="btn btn-block btn-primary btn-sm open_modal"  value="{{$contact->id}}"><i class="fa fa-fw fa-edit"></i>Edit</button>
+                    <button class="btn btn-block btn-primary btn-sm open_modal"  value="{{$contact->contact_recordid}}"><i class="fa fa-fw fa-edit"></i>Edit</button>
                   </td>
                 </tr>
               @endforeach             

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Functions\Airtable;
 use App\Schedule;
 use App\Airtables;
+use App\Services\Stringtoint;
 
 class ScheduleController extends Controller
 {
@@ -31,10 +32,43 @@ class ScheduleController extends Controller
 
             foreach ( $airtable_response['records'] as $record ) {
 
+
+
                 $schedule = new Schedule();
-                $schedule->schedule_recordid = $record[ 'id' ];
+                $strtointclass = new Stringtoint();
+
+                $schedule->schedule_recordid = $strtointclass->string_to_int($record[ 'id' ]);
+
                 $schedule->schedule_services = isset($record['fields']['services'])? implode(",", $record['fields']['services']):null;
-                $schedule->schedule_locations = isset($record['fields']['locations'])? implode(",", $record['fields']['locations']):null;
+
+                if(isset($record['fields']['services'])){
+                    $i = 0;
+                    foreach ($record['fields']['services']  as  $value) {
+
+                        $scheduleservice=$strtointclass->string_to_int($value);
+
+                        if($i != 0)
+                            $schedule->schedule_services = $schedule->schedule_services. ','. $scheduleservice;
+                        else
+                            $schedule->schedule_services = $scheduleservice;
+                        $i ++;
+                    }
+                }
+
+                if(isset($record['fields']['locations'])){
+                    $i = 0;
+                    foreach ($record['fields']['locations']  as  $value) {
+
+                        $schedulelocation=$strtointclass->string_to_int($value);
+
+                        if($i != 0)
+                            $schedule->schedule_locations = $schedule->schedule_locations. ','. $schedulelocation;
+                        else
+                            $schedule->schedule_locations = $schedulelocation;
+                        $i ++;
+                    }
+                }
+
                 $schedule->schedule_x_phones = isset($record['fields']['x-phones'])? implode(",", $record['fields']['x-phones']):null;
                 $schedule->schedule_days_of_week = isset($record['fields']['days_of_week'])?$record['fields']['days_of_week']:null;
                 $schedule->schedule_opens_at = isset($record['fields']['opens_at'])?$record['fields']['opens_at']:null;

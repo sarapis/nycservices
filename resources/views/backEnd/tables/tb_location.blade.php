@@ -61,12 +61,27 @@ Locations
                   <td class="text-center"><span style="white-space:normal;">{!! $location->service_description !!}</span></td>
 
                   <td class="text-center">
-                    <span class="badge bg-green">{{$location->service()->first()->service_name}}</span>
+                    @if($location->location_services!='') 
+                  
+                      @foreach($location->services as $service)
+                        
+                      <span class="badge bg-purple">{{$service->service_name}}</span>
+                      
+                      @endforeach
+                           
+                  @endif
                   </td>
 
-                  <td class="text-center">@foreach($location->phone as $phone)
-                    <span class="badge bg-red">{{$phone->phone_number}}</span>
-                  @endforeach
+                  <td class="text-center">
+                  @if($location->location_phones!='') 
+                  
+                      @foreach($location->phones as $phone)
+                        
+                      <span class="badge bg-purple">{{$phone->phone_number}}</span>
+                      
+                      @endforeach
+                           
+                  @endif
                   </td>
 
                   <td class="text-center">@if($location->location_details!='') @foreach($location->detail as $detail)
@@ -75,16 +90,24 @@ Locations
                   @endif
                   </td>
 
-                  <td class="text-center">@if($location->location_schedule!='') @foreach($location->schedule as $schedule)
-                    <span class="badge bg-blue">{{$schedule->id}}</span>
-                  @endforeach
+                  <td class="text-center">
+                  @if($location->location_schedule!='')
+                    @foreach($location->schedules as $schedule)
+                      <span class="badge bg-red">{{ $schedule->id }}</span>
+                    @endforeach
                   @endif
                   </td>
 
-                  <td class="text-center"><span class="badge bg-purple">{{$location->address()->first()->address_1}}</span></td>
+                  <td class="text-center">
+                  @if($location->location_address!='')
+                    @foreach($location->address as $address)
+                      <span class="badge bg-red">{{ $address->address_1 }}</span>
+                    @endforeach
+                  @endif
+                  </td>
 
                   <td class="text-center">
-                    <button class="btn btn-block btn-primary btn-sm open_modal"  value="{{$location->id}}" style="width: 80px;"><i class="fa fa-fw fa-edit"></i>Edit</button>
+                    <button class="btn btn-block btn-primary btn-sm open_modal"  value="{{$location->location_recordid}}" style="width: 80px;"><i class="fa fa-fw fa-edit"></i>Edit</button>
                   </td>
                 </tr>
               @endforeach             

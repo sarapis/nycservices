@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Organization extends Model
 {
     protected $table = 'organizations';
+
+    protected $primaryKey = 'organization_recordid';
     
 	public $timestamps = false;
 

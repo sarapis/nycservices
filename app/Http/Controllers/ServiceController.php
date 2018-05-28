@@ -6,8 +6,13 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Functions\Airtable;
 use App\Service;
+use App\Servicelocation;
+use App\Servicephone;
+use App\Servicedetail;
+use App\Serviceaddress;
 use App\Location;
 use App\Airtables;
+use App\Services\Stringtoint;
 
 class ServiceController extends Controller
 {
@@ -22,6 +27,11 @@ class ServiceController extends Controller
     {
 
         Service::truncate();
+        Servicelocation::truncate();
+        Serviceaddress::truncate();
+        Servicephone::truncate();
+        Servicedetail::truncate();
+
         $airtable = new Airtable(array(
             'api_key'   => 'keyIvQZcMYmjNbtUO',
             'base'      => 'appqjWvTygtaX9eil',
@@ -38,27 +48,102 @@ class ServiceController extends Controller
 
             foreach ( $airtable_response['records'] as $record ) {
 
+
                 $service = new Service();
-                $service->service_recordid = $record[ 'id' ];
+                $strtointclass = new Stringtoint();
+                $service->service_recordid= $strtointclass->string_to_int($record[ 'id' ]);
                 $service->service_name = isset($record['fields']['name'])?$record['fields']['name']:null;
                 $service->service_organization = isset($record['fields']['organization'])? implode(",", $record['fields']['organization']):null;
+                $service->service_organization = $strtointclass->string_to_int($service->service_organization);
                 $service->service_alternate_name = isset($record['fields']['alternate_name'])?$record['fields']['alternate_name']:null;
                 $service->service_description = isset($record['fields']['description'])?$record['fields']['description']:null;
-                $service->service_locations = isset($record['fields']['locations'])? implode(",", $record['fields']['locations']):null;
+
+                if(isset($record['fields']['locations'])){
+                    $i = 0;
+                    foreach ($record['fields']['locations']  as  $value) {
+                        $service_location = new Servicelocation();
+                        $service_location->service_recordid=$service->service_recordid;
+                        $service_location->location_recordid=$strtointclass->string_to_int($value);
+                        $service_location->save();
+                        $servicelocation=$strtointclass->string_to_int($value);
+
+                        if($i != 0)
+                            $service->service_locations = $service->service_locations. ','. $servicelocation;
+                        else
+                            $service->service_locations = $servicelocation;
+                        $i ++;
+                    }
+                }
+                
                 $service->service_url = isset($record['fields']['url'])?$record['fields']['url']:null;
                 $service->service_email = isset($record['fields']['email'])?$record['fields']['email']:null;
                 $service->service_status = isset($record['fields']['status'])?$record['fields']['status']:null;
-                $service->service_taxonomy = isset($record['fields']['taxonomy'])? implode(",", $record['fields']['taxonomy']):null;              
+                $service->service_taxonomy = isset($record['fields']['taxonomy'])? implode(",", $record['fields']['taxonomy']):null;
+
+                $service->service_taxonomy= $strtointclass->string_to_int($service->service_taxonomy);
+
                 $service->service_application_process = isset($record['fields']['application_process'])?$record['fields']['application_process']:null;
                 $service->service_wait_time = isset($record['fields']['wait_time'])?$record['fields']['wait_time']:null;
                 $service->service_fees = isset($record['fields']['fees'])?$record['fields']['fees']:null;
                 $service->service_accreditations = isset($record['fields']['accreditations'])?$record['fields']['accreditations']:null;
                 $service->service_licenses = isset($record['fields']['licenses'])?$record['fields']['licenses']:null;
-                $service->service_phones = isset($record['fields']['phones'])? implode(",", $record['fields']['phones']):null;
+
+
+                if(isset($record['fields']['phones'])){
+                    $i = 0;
+                    foreach ($record['fields']['phones']  as  $value) {
+                        $service_phone = new Servicephone();
+                        $service_phone->service_recordid=$service->service_recordid;
+                        $service_phone->phone_recordid=$strtointclass->string_to_int($value);
+                        $service_phone->save();
+                        $servicephone=$strtointclass->string_to_int($value);
+
+                        if($i != 0)
+                            $service->service_phones = $service->service_phones. ','. $servicephone;
+                        else
+                            $service->service_phones = $servicephone;
+                        $i ++;
+                    }
+                }
+
+
                 $service->service_schedule = isset($record['fields']['schedule'])? implode(",", $record['fields']['schedule']):null;
                 $service->service_contacts = isset($record['fields']['contacts'])? implode(",", $record['fields']['contacts']):null;
-                $service->service_details = isset($record['fields']['details'])? implode(",", $record['fields']['details']):null;
-                $service->service_address = isset($record['fields']['address'])? implode(",", $record['fields']['address']):null;
+
+                if(isset($record['fields']['details'])){
+                    $i = 0;
+                    foreach ($record['fields']['details']  as  $value) {
+                        $service_detail = new Servicedetail();
+                        $service_detail->service_recordid=$service->service_recordid;
+                        $service_detail->detail_recordid=$strtointclass->string_to_int($value);
+                        $service_detail->save();
+                        $servicedetail=$strtointclass->string_to_int($value);
+
+                        if($i != 0)
+                            $service->service_details = $service->service_details. ','. $servicedetail;
+                        else
+                            $service->service_details = $servicedetail;
+                        $i ++;
+                    }
+                }
+
+                if(isset($record['fields']['address'])){
+                    $i = 0;
+                    foreach ($record['fields']['address']  as  $value) {
+                        $service_addresses = new Serviceaddress();
+                        $service_addresses->service_recordid=$service->service_recordid;
+                        $service_addresses->address_recordid=$strtointclass->string_to_int($value);
+                        $service_addresses->save();
+                        $serviceaddress=$strtointclass->string_to_int($value);
+
+                        if($i != 0)
+                            $service->service_address = $service->service_address. ','. $serviceaddress;
+                        else
+                            $service->service_address = $serviceaddress;
+                        $i ++;
+                    }
+                }
+
                 $service->service_metadata = isset($record['fields']['metadata'])? $record['fields']['metadata']:null;              
                 
                 $service ->save();
@@ -78,15 +163,17 @@ class ServiceController extends Controller
 
     public function index()
     {
-        $services = Service::orderBy('service_name')->paginate(20);
+        $services = Service::with('locations')->orderBy('service_name')->paginate(10);
+        
 
         return view('backEnd.tables.tb_services', compact('services'));
     }
 
+
     public function services()
     {
-        $services = Service::orderBy('service_name')->paginate(10);
-        $locations = Location::with('service','organization')->get();
+        $services = Service::with('locations')->orderBy('service_name')->paginate(10);
+        $locations = Location::with('services','organization')->get();
 
         return view('frontEnd.services', compact('services', 'locations'));
     }
@@ -102,7 +189,7 @@ class ServiceController extends Controller
     public function taxonomy($id)
     {
         $services = Service::where('service_taxonomy', '=', $id)->orderBy('service_name')->paginate(10);
-        $locations = Location::with('service','organization')->get();
+        $locations = Location::where('location_organization', '=', $id)->with('services','organization')->get();
 
         return view('frontEnd.services', compact('services', 'locations'));
     }

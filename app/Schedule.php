@@ -10,6 +10,8 @@ class Schedule extends Model
 	use Sortable;
 
     protected $table = 'schedule';
+
+    protected $primaryKey = 'schedule_recordid';
     
 	public $timestamps = false;
 
@@ -18,9 +20,11 @@ class Schedule extends Model
         return $this->belongsTo('App\Service', 'schedule_services', 'service_recordid');
     }
 
-	public function Location()
+    public function locations()
     {
-        return $this->belongsTo('App\Location', 'schedule_locations', 'location_recordid');
+
+        return $this->belongsToMany('App\Location', 'location_schedule', 'schedule_recordid', 'location_recordid');
+
     }
 
     public function phone()

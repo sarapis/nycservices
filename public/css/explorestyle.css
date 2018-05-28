@@ -212,6 +212,7 @@ p{
     padding: 0px;
     transition: all 0.3s;
     background: white;
+    min-height: calc(100% - 134px);
 /*    position: absolute;
     top: 0;
     right: 0;*/

@@ -49,8 +49,9 @@ Schedule
                   @endif
                   </td>
 
-                  <td>@if($schedule->schedule_locations!='')
-                    <span class="badge bg-green">{{$schedule->location()->first()->location_name}}</span>
+                  <td>
+                  @if($schedule->schedule_locations!='')
+                    <span class="badge bg-green">{{$schedule->locations()->first()->location_name}}</span>
                   @endif
                   </td>
 
@@ -72,7 +73,7 @@ Schedule
                   
 
                   <td class="text-center">
-                    <button class="btn btn-block btn-primary btn-sm open_modal"  value="{{$schedule->id}}" style="width: 80px;"><i class="fa fa-fw fa-edit"></i>Edit</button>
+                    <button class="btn btn-block btn-primary btn-sm open_modal"  value="{{$schedule->schedule_recordid}}" style="width: 80px;"><i class="fa fa-fw fa-edit"></i>Edit</button>
                   </td>
 
                 </tr>

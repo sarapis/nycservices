@@ -30,11 +30,12 @@ Services
                     <th class="text-center">No</th>
                     <th class="text-center">Name</th>                   
                     <th class="text-center">Organizations</th>                   
-                    <th class="text-center">Alternate name</th>                 
+                    <th class="text-center">Alternate name</th> 
+                    <th class="text-center">Url</th>
+                    <th class="text-center">Email</th>                
                     <th class="text-center">Description</th>
                     <th class="text-center">Locations</th>
-                    <th class="text-center">Url</th>
-                    <th class="text-center">Email</th>
+                    
                     <th class="text-center">Status</th>
                     <th class="text-center">Taxonomy</th>
                     <th class="text-center">Application Process</th>
@@ -56,21 +57,42 @@ Services
                   <td class="text-center">{{$key+1}}</td>
                   <td>{{$service->service_name}}</td>
                   
-                  <td class="text-center">
-                    <span class="badge bg-green">{{$service->organization()->first()->organization_name}}</span>
-                  </td>
                   
+                  <td class="text-center">
+                  @if($service->service_organization!=0)
+                    <span class="badge bg-green">{{$service->organization()->first()->organization_name}}</span>
+                  @endif
+                  </td>
+                 
                   <td class="text-center">{{$service->service_alternate_name}}</td>
+
+                  <td class="text-center">{{$service->service_url}}</td>
+                  <td class="text-center">{{$service->service_email}}</td>
+          
                   
                   <td class="text-center"><span style="white-space:normal;">{!! $service->service_description !!}</span></td>
-                  <td class="text-center">@foreach($service->location as $location)
-                    <span class="badge bg-red">{{$location->location_name}}</span>
-                  @endforeach
+
+                  <td class="text-center">
+                  @if($service->service_locations!='') 
+                  
+                      @foreach($service->locations as $location)
+                        
+                      <span class="badge bg-purple">{{$location->location_name}}</span>
+                      
+                      @endforeach
+                           
+                  @endif
                   </td>
-                  <td class="text-center">{{$service->url}}</td>
-                  <td class="text-center">{{$service->email}}</td>
-                  <td class="text-center">{{$service->status}}</td>
-                  <td class="text-center"><span class="badge bg-blue">{{$service->taxonomy()->first()->taxonomy_name}}</span></td>
+
+                  <td class="text-center">{{$service->service_status}}</td>
+          
+                  
+                  <td class="text-center">
+                    @if($service->service_taxonomy!=0)
+                    <span class="badge bg-blue">{{$service->taxonomy()->first()->taxonomy_name}}</span>
+                    @endif
+                  </td>
+                
                   <td class="text-center"><span style="white-space:normal;">{!! $service->service_application_process !!}</span></td>
                   <td class="text-center">{{$service->service_wait_time}}</td>
                   <td class="text-center">{{$service->service_fees}}</td>
@@ -100,7 +122,7 @@ Services
                   </td>
 
                   <td class="text-center">
-                    <button class="btn btn-block btn-primary btn-sm open_modal"  value="{{$service->id}}" style="width: 80px;"><i class="fa fa-fw fa-edit"></i>Edit</button>
+                    <button class="btn btn-block btn-primary btn-sm open_modal"  value="{{$service->service_recordid}}" style="width: 80px;"><i class="fa fa-fw fa-edit"></i>Edit</button>
                   </td>
                 </tr>
               @endforeach             

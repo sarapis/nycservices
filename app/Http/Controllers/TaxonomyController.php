@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Functions\Airtable;
 use App\Taxonomy;
 use App\Airtables;
+use App\Services\Stringtoint;
 
 class TaxonomyController extends Controller
 {
@@ -32,13 +33,33 @@ class TaxonomyController extends Controller
             foreach ( $airtable_response['records'] as $record ) {
 
                 $taxonomy = new Taxonomy();
-                $taxonomy->taxonomy_recordid = $record[ 'id' ];
+                $strtointclass = new Stringtoint();
+
+                $taxonomy->taxonomy_recordid = $strtointclass->string_to_int($record[ 'id' ]);
+                 // $taxonomy->taxonomy_recordid = $record[ 'id' ];
                 $taxonomy->taxonomy_name = isset($record['fields']['name'])?$record['fields']['name']:null;
                 $taxonomy->taxonomy_parent_name = isset($record['fields']['parent_name'])? implode(",", $record['fields']['parent_name']):null;
+                if($taxonomy->taxonomy_parent_name!=null){
+                    $taxonomy->taxonomy_parent_name = $strtointclass->string_to_int($taxonomy->taxonomy_parent_name);
+                }
                 $taxonomy->taxonomy_vocabulary = isset($record['fields']['vocabulary'])?$record['fields']['vocabulary']:null;
                 $taxonomy->taxonomy_x_description = isset($record['fields']['x-description'])?$record['fields']['x-description']:null;
                 $taxonomy->taxonomy_x_notes = isset($record['fields']['x-notes'])?$record['fields']['x-notes']:null;
-                $taxonomy->taxonomy_services = isset($record['fields']['services'])? implode(",", $record['fields']['services']):null;
+
+                if(isset($record['fields']['services'])){
+                    $i = 0;
+                    foreach ($record['fields']['services']  as  $value) {
+
+                        $taxonomyservice=$strtointclass->string_to_int($value);
+
+                        if($i != 0)
+                            $taxonomy->taxonomy_services = $taxonomy->taxonomy_services. ','. $taxonomyservice;
+                        else
+                            $taxonomy->taxonomy_services = $taxonomyservice;
+                        $i ++;
+                    }
+                } 
+
                 $taxonomy ->save();
 
             }

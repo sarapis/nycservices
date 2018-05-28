@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Functions\Airtable;
 use App\Detail;
 use App\Airtables;
+use App\Services\Stringtoint;
 
 class DetailController extends Controller
 {
@@ -32,13 +33,43 @@ class DetailController extends Controller
             foreach ( $airtable_response['records'] as $record ) {
 
                 $detail = new Detail();
-                $detail->detail_recordid = $record[ 'id' ];
+                $strtointclass = new Stringtoint();
+
+                $detail->detail_recordid = $strtointclass->string_to_int($record[ 'id' ]);
                 $detail->detail_value = isset($record['fields']['value'])?$record['fields']['value']:null;
                 $detail->detail_type = isset($record['fields']['detail_type'])?$record['fields']['detail_type']:null;
                 $detail->detail_description= isset($record['fields']['description'])?$record['fields']['description']:null;
                 $detail->detail_organizations = isset($record['fields']['organizations'])? implode(",", $record['fields']['organizations']):null;
                 $detail->detail_services = isset($record['fields']['services'])? implode(",", $record['fields']['services']):null;
-                $detail->detail_locations = isset($record['fields']['locations'])? implode(",", $record['fields']['locations']):null;
+
+                if(isset($record['fields']['services'])){
+                    $i = 0;
+                    foreach ($record['fields']['services']  as  $value) {
+
+                        $detailservice=$strtointclass->string_to_int($value);
+
+                        if($i != 0)
+                            $detail->detail_services = $detail->detail_services. ','. $detailservice;
+                        else
+                            $detail->detail_services = $detailservice;
+                        $i ++;
+                    }
+                } 
+
+                if(isset($record['fields']['locations'])){
+                    $i = 0;
+                    foreach ($record['fields']['locations']  as  $value) {
+
+                        $detaillocation=$strtointclass->string_to_int($value);
+
+                        if($i != 0)
+                            $detail->detail_locations = $detail->detail_locations. ','. $detaillocation;
+                        else
+                            $detail->detail_locations = $detaillocation;
+                        $i ++;
+                    }
+                }
+
                 $detail ->save();
 
             }

@@ -23,7 +23,7 @@ $(document).ready(function(){
             url: url + '/' + id,
             success: function (data) {
                 // console.log(data);
-                $('#id').val(data.id);
+                $('#id').val(data.phone_recordid);
                 $('#phone_number').val(data.phone_number);
                 $('#phone_extension').val(data.phone_extension);
                 $('#phone_type').val(data.phone_type);

@@ -6,7 +6,11 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Functions\Airtable;
 use App\Location;
+use App\Locationaddress;
+use App\Locationphone;
+use App\Locationschedule;
 use App\Airtables;
+use App\Services\Stringtoint;
 
 class LocationController extends Controller
 {
@@ -15,6 +19,10 @@ class LocationController extends Controller
     {
 
         Location::truncate();
+        Locationaddress::truncate();
+        Locationphone::truncate();
+        Locationschedule::truncate();
+
         $airtable = new Airtable(array(
             'api_key'   => 'keyIvQZcMYmjNbtUO',
             'base'      => 'appqjWvTygtaX9eil',
@@ -32,19 +40,85 @@ class LocationController extends Controller
             foreach ( $airtable_response['records'] as $record ) {
 
                 $location = new Location();
-                $location->location_recordid = $record[ 'id' ];
+                $strtointclass = new Stringtoint();
+                $location->location_recordid= $strtointclass->string_to_int($record[ 'id' ]);
                 $location->location_name = isset($record['fields']['name'])?$record['fields']['name']:null;
+
                 $location->location_organization = isset($record['fields']['organization'])? implode(",", $record['fields']['organization']):null;
+
+                $location->location_organization = $strtointclass->string_to_int($location->location_organization);
+
                 $location->location_alternate_name = isset($record['fields']['alternate_name'])?$record['fields']['alternate_name']:null;
                 $location->location_transportation = isset($record['fields']['transportation'])?$record['fields']['transportation']:null;
                 $location->location_latitude = isset($record['fields']['latitude'])?$record['fields']['latitude']:null;
                 $location->location_longitude = isset($record['fields']['longitude'])?$record['fields']['longitude']:null;
                 $location->location_description = isset($record['fields']['description'])?$record['fields']['description']:null;
                 $location->location_services = isset($record['fields']['services'])? implode(",", $record['fields']['services']):null;  
-                $location->location_phones = isset($record['fields']['phones'])? implode(",", $record['fields']['phones']):null;
+
+                if(isset($record['fields']['services'])){
+                    $i = 0;
+                    foreach ($record['fields']['services']  as  $value) {
+
+                        $locationservice=$strtointclass->string_to_int($value);
+
+                        if($i != 0)
+                            $location->location_services = $location->location_services. ','. $locationservice;
+                        else
+                            $location->location_services = $locationservice;
+                        $i ++;
+                    }
+                } 
+               
+                if(isset($record['fields']['phones'])){
+                    $i = 0;
+                    foreach ($record['fields']['phones']  as  $value) {
+
+                        $location_phone = new Locationphone();
+                        $location_phone->location_recordid=$location->location_recordid;
+                        $location_phone->phone_recordid=$strtointclass->string_to_int($value);
+                        $location_phone->save();
+                        if($i != 0)
+                            $location->location_phones = $location->location_phones. ','. $location_phone->phone_recordid;
+                        else
+                            $location->location_phones = $location_phone->phone_recordid;
+                        $i ++;
+                    }
+                }
+
                 $location->location_details = isset($record['fields']['details'])? implode(",", $record['fields']['details']):null;
-                $location->location_schedule = isset($record['fields']['schedule'])? implode(",", $record['fields']['schedule']):null; 
-                $location->location_address = isset($record['fields']['address'])? implode(",", $record['fields']['address']):null;      
+            
+
+                if(isset($record['fields']['schedule'])){
+                    $i = 0;
+                    foreach ($record['fields']['schedule']  as  $value) {
+                        $locationschedule = new Locationschedule();
+                        $locationschedule->location_recordid=$location->location_recordid;
+                        $locationschedule->schedule_recordid=$strtointclass->string_to_int($value);
+                        $locationschedule->save();
+                        if($i != 0)
+                            $location->location_schedule = $location->location_schedule. ','. $locationschedule->schedule_recordid;
+                        else
+                            $location->location_schedule = $locationschedule->schedule_recordid;
+                        $i ++;
+                    }
+                } 
+
+                $location->location_address = isset($record['fields']['address'])? implode(",", $record['fields']['address']):null;  
+
+                if(isset($record['fields']['address'])){
+                    $i=0;
+                    foreach ($record['fields']['address']  as  $value) {
+                        $locationaddress = new Locationaddress();
+                        $locationaddress->location_recordid=$location->location_recordid;
+                        $locationaddress->address_recordid=$strtointclass->string_to_int($value);
+                        $locationaddress->save();
+                        if($i != 0)
+                            $location->location_address = $location->location_address. ','. $locationaddress->address_recordid;
+                        else
+                            $location->location_address = $locationaddress->address_recordid;
+                        $i ++;
+                    }
+                }    
                 
                 $location ->save();
 

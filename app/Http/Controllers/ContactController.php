@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Functions\Airtable;
 use App\Contact;
 use App\Airtables;
+use App\Services\Stringtoint;
 
 class ContactController extends Controller
 {
@@ -32,10 +33,19 @@ class ContactController extends Controller
             foreach ( $airtable_response['records'] as $record ) {
 
                 $contact = new Contact();
-                $contact->contact_recordid = $record[ 'id' ];
+                $strtointclass = new Stringtoint();
+
+                $contact->contact_recordid= $strtointclass->string_to_int($record[ 'id' ]);
+
                 $contact->contact_name = isset($record['fields']['name'])?$record['fields']['name']:null;
                 $contact->contact_organizations = isset($record['fields']['organizations'])? implode(",", $record['fields']['organizations']):null;
+
+                $contact->contact_organizations = $strtointclass->string_to_int($contact->contact_organizations);
+
                 $contact->contact_services = isset($record['fields']['services'])? implode(",", $record['fields']['services']):null;
+
+                $contact->contact_services = $strtointclass->string_to_int($contact->contact_services);
+
                 $contact->contact_title = isset($record['fields']['title'])?$record['fields']['title']:null;
                 $contact->contact_department = isset($record['fields']['department'])?$record['fields']['department']:null;
                 $contact->contact_email = isset($record['fields']['email'])?$record['fields']['email']:null;

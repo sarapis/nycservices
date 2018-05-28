@@ -11,10 +11,18 @@ class Address extends Model
 
     protected $table = 'address';
     
+    protected $primaryKey = 'address_recordid';
+
 	public $timestamps = false;
 
-	public function location()
+
+    public function locations()
     {
-        return $this->belongsTo('App\Location', 'address_locations', 'location_recordid');
+        return $this->belongsToMany('App\Location', 'location_address', 'address_recordid', 'location_recordid');
+    }
+
+    public function services()
+    {
+        return $this->belongsToMany('App\Service', 'service_address', 'address_recordid', 'service_recordid');
     }
 }

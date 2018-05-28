@@ -7,12 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Phone extends Model
 {
     protected $table = 'phones';
+
+    protected $primaryKey = 'phone_recordid';
     
 	public $timestamps = false;
 
-	public function location()
+    public function locations()
     {
-        return $this->belongsTo('App\Location', 'phone_locations', 'location_recordid');
+        return $this->belongsToMany('App\Location', 'location_phone', 'phone_recordid', 'location_recordid');
     }
 
     public function service()

@@ -38,7 +38,7 @@ Route::get('/category_{id}', 'ServiceController@taxonomy');
 
 Route::get('/geolocation', 'ExploreController@geolocation');
 
-Route::get('/geo', 'ExploreController@geo');
+Route::get('/geocode', 'ExploreController@geocode');
 
 // Route::post('/explore', 'ExploreController@index');
 Route::get('/profile/{id}', 'ExploreController@profile');

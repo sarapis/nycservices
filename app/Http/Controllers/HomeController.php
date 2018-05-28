@@ -57,7 +57,7 @@ class HomeController extends Controller
                 })->orwhereHas('taxonomy', function ($q)  use($search){
                     $q->where('taxonomy_name', 'like', '%'.$search.'%');
                 })->paginate(10);
-        $locations = Location::with('service','organization')->get();
+        $locations = Location::with('services','organization')->get();
 
         // $services =Service::where('service_name',  'like', '%'.$search.'%')->get();
         return view('frontEnd.services', compact('services','locations'));

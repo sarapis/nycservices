@@ -11,18 +11,22 @@ class Service extends Model
 
     protected $table = 'services';
 
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'service_recordid';
     
 	public $timestamps = false;
+  
 
 	public function organization()
     {
         return $this->belongsTo('App\Organization', 'service_organization', 'organization_recordid');
     }
 
-    public function location()
+     public function locations()
     {
-        return $this->hasmany('App\Location', 'location_services', 'service_recordid');
+        $this->primaryKey='service_recordid';
+
+        return $this->belongsToMany('App\Location', 'service_location', 'service_recordid', 'location_recordid');
+
     }
 
     public function taxonomy()

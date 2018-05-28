@@ -96,9 +96,14 @@ ul#ui-id-1 {
                       <div class="panel-body p-20">
 
                           <h4><span class="badge bg-red">Location:</span> {{$location->location_name}}</h4>
-                          <h4><span class="badge bg-red">Address:</span> {{$location->address()->first()->address_1}}, {{$location->address()->first()->address_city}}, {{$location->address()->first()->address_state_province}}, {{$location->address()->first()->address_postal_code}}</h4>
+                          <h4><span class="badge bg-red">Address:</span> @if($location->location_address!='')
+                            @foreach($location->address as $address)
+                              {{ $address->address_1 }} {{ $address->address_city }} {{ $address->address_state_province }} {{ $address->address_postal_code }}
+                            @endforeach
+                          @endif
+                          </h4>
                           <h4><span class="badge bg-red">Phone:</span>
-                             @foreach($location->phone as $phone)
+                             @foreach($location->phones as $phone)
                               {{$phone->phone_number}},
                              @endforeach
                           </h4>
@@ -129,24 +134,32 @@ ul#ui-id-1 {
 <script>
     
     var locations = <?php print_r(json_encode($locations)) ?>;
+    var organization = <?php print_r(json_encode($organization->organization_name)) ?>;
     console.log(locations);
-    var show = 1;
-    if(locations.length == 0){
-      show = 0;
-      locations[0] = {};
-      locations[0].location_latitude = 40.730981;
-      locations[0].location_longitude = -73.998107;
-    }
+
     var sumlat = 0.0;
     var sumlng = 0.0;
+    var length = 0;
+    console.log(locations.length);
     for(var i = 0; i < locations.length; i ++)
     {
-        sumlat += parseFloat(locations[i].location_latitude);
-        sumlng += parseFloat(locations[i].location_longitude);
-
+        if(locations[i].location_latitude)
+        {
+            sumlat += parseFloat(locations[i].location_latitude);
+            sumlng += parseFloat(locations[i].location_longitude);
+            length ++;
+        }
     }
-    var avglat = sumlat/locations.length;
-    var avglng = sumlng/locations.length;
+    if(length != 0){
+        var avglat = sumlat/length;
+        var avglng = sumlng/length;
+    }
+    else
+    {
+        avglat = 40.730981;
+        avglng = -73.998107;
+    }
+    console.log(avglat);
     var mymap = new GMaps({
       el: '#map',
       lat: avglat,
@@ -156,17 +169,20 @@ ul#ui-id-1 {
 
 
     $.each( locations, function(index, value ){
+        console.log(value);
+        if(value.location_latitude){
+            mymap.addMarker({
 
-        mymap.addMarker({
-            lat: value.location_latitude,
-            lng: value.location_longitude,
-            title: value.city,
-                   
-            infoWindow: {
-                maxWidth: 250,
-                content: ('<a href="/service_'+value.service.service_recordid+'" style="color:#424242;font-weight:500;font-size:14px;">'+value.service.service_name+'</a>')
-            }
-        });
+                lat: value.location_latitude,
+                lng: value.location_longitude,
+                title: value.city,
+                       
+                infoWindow: {
+                    maxWidth: 250,
+                    content: ('<a href="/service_" style="color:#424242;font-weight:500;font-size:14px;">'+value.services.service_name+'<br>'+organization+'</a>')
+                }
+            });
+        }
    });
 </script>
 @endsection

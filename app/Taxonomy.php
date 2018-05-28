@@ -8,6 +8,8 @@ class Taxonomy extends Model
 {
     protected $table = 'taxonomy';
 
+    protected $primaryKey = 'taxonomy_recordid';
+
     public $fillable = ['name','parent_name'];
 
     public $timestamps = false;

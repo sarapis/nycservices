@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Functions\Airtable;
 use App\Address;
 use App\Airtables;
+use App\Services\Stringtoint;
 
 class AddressController extends Controller
 {
@@ -32,7 +33,10 @@ class AddressController extends Controller
             foreach ( $airtable_response['records'] as $record ) {
 
                 $address = new Address();
-                $address->address_recordid = $record[ 'id' ];
+                $strtointclass = new Stringtoint();
+
+                $address->address_recordid = $strtointclass->string_to_int($record[ 'id' ]);
+
                 $address->address_1 = isset($record['fields']['address_1'])?$record['fields']['address_1']:null;
                 $address->address_2 = isset($record['fields']['address_2'])?$record['fields']['address_2']:null;
                 $address->address_city = isset($record['fields']['city'])?$record['fields']['city']:null;
@@ -42,8 +46,34 @@ class AddressController extends Controller
                 $address->address_country = isset($record['fields']['country'])?$record['fields']['country']:null;
                 $address->address_attention = isset($record['fields']['attention'])?$record['fields']['attention']:null;
                 $address->address_type = isset($record['fields']['address_type'])? implode(",", $record['fields']['address_type']):null;
-                $address->address_locations = isset($record['fields']['locations'])? implode(",", $record['fields']['locations']):null;
-                $address->address_services = isset($record['fields']['services'])? implode(",", $record['fields']['services']):null;
+
+                if(isset($record['fields']['locations'])){
+                    $i = 0;
+                    foreach ($record['fields']['locations']  as  $value) {
+
+                        $addresslocation=$strtointclass->string_to_int($value);
+
+                        if($i != 0)
+                            $address->address_locations = $address->address_locations. ','. $addresslocation;
+                        else
+                            $address->address_locations = $addresslocation;
+                        $i ++;
+                    }
+                }
+
+                if(isset($record['fields']['services'])){
+                    $i = 0;
+                    foreach ($record['fields']['services']  as  $value) {
+
+                        $addressservice=$strtointclass->string_to_int($value);
+
+                        if($i != 0)
+                            $address->address_services = $address->address_services. ','. $addressservice;
+                        else
+                            $address->address_services = $addressservice;
+                        $i ++;
+                    }
+                }
                 $address ->save();
 
             }

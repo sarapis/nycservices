@@ -60,9 +60,7 @@ ul#ui-id-1 {
                     </div>
                 </div>
                 @endforeach
-                <div class="pagination p-20">
-                    {{ $services->appends(\Request::except('page'))->render() }}
-                </div>
+
             </div>
             
             <div class="col-md-4 p-0">
@@ -119,7 +117,7 @@ ul#ui-id-1 {
       el: '#map',
       lat: avglat,
       lng: avglng,
-      zoom:10
+      zoom:12
     });
 
 
