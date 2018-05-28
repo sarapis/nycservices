@@ -36,7 +36,7 @@ Route::get('/organization_{id}', 'OrganizationController@organization');
 
 Route::get('/category_{id}', 'ServiceController@taxonomy');
 
-Route::get('/geolocation', 'ExploreController@geolocation');
+Route::get('/services_near_me', 'ExploreController@geolocation');
 
 Route::get('/geocode', 'ExploreController@geocode');
 

@@ -70,7 +70,7 @@ Home
                               
                           </div>
                           <button type="submit" class="btn_findout"><h4 class="text-white mb-0">Search</h4></button>
-                           <a href="/geolocation" class="btn_findout pull-right"><h4 class="text-white mb-0">Services Near Me</h4></a>
+                           <a href="/services_near_me" class="btn_findout pull-right"><h4 class="text-white mb-0">Services Near Me</h4></a>
                         </form>
                     </div>
                 </div>
