@@ -30,8 +30,8 @@ class ExploreController extends Controller
         // var_dump($locations);
 
 
-        $lat =(int)$data->latitude;
-        $lng =(int)$data->longitude;
+        $lat =floatval($data->latitude);
+        $lng =floatval($data->longitude);
 
         $locations = Location::with('services', 'organization')->select(DB::raw('*, ( 3959 * acos( cos( radians('.$lat.') ) * cos( radians( location_latitude ) ) * cos( radians( location_longitude ) - radians('.$lng.') ) + sin( radians('.$lat.') ) * sin( radians( location_latitude ) ) ) ) AS distance'))
         ->having('distance', '<', 2)
