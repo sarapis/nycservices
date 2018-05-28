@@ -90,12 +90,12 @@ ul#ui-id-1 {
 <script>
     
     var locations = <?php print_r(json_encode($locations)) ?>;
-    console.log(locations);
+    // console.log(locations);
 
     var sumlat = 0.0;
     var sumlng = 0.0;
     var length = 0;
-    console.log(locations.length);
+    // console.log(locations.length);
     for(var i = 0; i < locations.length; i ++)
     {
         if(locations[i].location_latitude)
@@ -114,7 +114,7 @@ ul#ui-id-1 {
         avglat = 40.730981;
         avglng = -73.998107;
     }
-    console.log(avglat);
+    // console.log(avglat);
     var mymap = new GMaps({
       el: '#map',
       lat: avglat,
@@ -124,7 +124,7 @@ ul#ui-id-1 {
 
 
     $.each( locations, function(index, value ){
-        console.log(value);
+        // console.log(value);
         if(value.location_latitude){
             mymap.addMarker({
 

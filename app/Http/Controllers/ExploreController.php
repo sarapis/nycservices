@@ -56,17 +56,42 @@ class ExploreController extends Controller
     public function geocode(Request $request)
     {
         $ip= \Request::ip();
-        $response = Geocode::make()->address('1365 Jerome Avenue');
 
-        if ($response) {
-            echo $response->latitude();
-            echo $response->longitude();
-            echo $response->formattedAddress();
-            echo $response->locationType();
-    //         echo $response->raw()->address_components[8]['types'][0];
-    // echo $response->raw()->address_components[8]['long_name'];
-           dd($response);
+        $search_address = $request->input('search_address');
+        $response = Geocode::make()->address($search_address);
+
+    //     if ($response) {
+    //         echo $response->latitude();
+    //         echo $response->longitude();
+    //         echo $response->formattedAddress();
+    //         echo $response->locationType();
+    // //         echo $response->raw()->address_components[8]['types'][0];
+    // // echo $response->raw()->address_components[8]['long_name'];
+    //        dd($response);
+    //     }
+
+        $lat =$response->latitude();
+        $lng =$response->longitude();
+
+        // $lat =37.3422;
+        // $lng = -121.905;
+
+        $locations = Location::with('services', 'organization')->select(DB::raw('*, ( 3959 * acos( cos( radians('.$lat.') ) * cos( radians( location_latitude ) ) * cos( radians( location_longitude ) - radians('.$lng.') ) + sin( radians('.$lat.') ) * sin( radians( location_latitude ) ) ) ) AS distance'))
+        ->having('distance', '<', 2)
+        ->orderBy('distance')
+        ->get();
+
+        $services = [];
+        foreach ($locations as $key => $location) {
+            
+            $values = Service::where('service_locations', 'like', '%'.$location->location_recordid.'%')->get();
+            foreach ($values as $key => $value) {
+                $services[] = $value;
+            }
         }
+        
+        return view('frontEnd.near', compact('services','locations'));
+
     }
     public function index(Request $request)
     {

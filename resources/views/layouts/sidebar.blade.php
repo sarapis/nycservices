@@ -21,10 +21,11 @@
 
             <li class="option-side">
                 <!--begin::Form-->
-                <form method="get" class="mb-5" id="search_location">
+                <form method="post" action="/search_address" class="mb-5" id="search_location">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <div class="input-search">
                         <i class="input-search-icon md-search" aria-hidden="true"></i>
-                        <input id="location" type="text" class="form-control search-form" name="address" placeholder="Search Address">
+                        <input id="location" type="text" class="form-control search-form" name="search_address" placeholder="Search Address">
                     </div>
                 </form>
             </li>

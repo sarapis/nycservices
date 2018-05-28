@@ -25,6 +25,10 @@ Route::match(['get', 'post'], '/find', [
     'uses'          => 'HomeController@search'
 ]);
 
+Route::match(['get', 'post'], '/search_address', [
+    'uses'          => 'ExploreController@geocode'
+]);
+
 Route::get('/about', ['uses' => 'HomeController@about']);
 Route::get('/feedback', ['uses' => 'HomeController@feedback']);
 
@@ -38,7 +42,6 @@ Route::get('/category_{id}', 'ServiceController@taxonomy');
 
 Route::get('/services_near_me', 'ExploreController@geolocation');
 
-Route::get('/geocode', 'ExploreController@geocode');
 
 // Route::post('/explore', 'ExploreController@index');
 Route::get('/profile/{id}', 'ExploreController@profile');

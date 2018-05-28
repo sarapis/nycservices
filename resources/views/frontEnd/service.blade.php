@@ -44,9 +44,9 @@ ul#ui-id-1 {
                         <h2>{{$service->service_name}}</h2>
                         <h4 class="panel-text"><span class="badge bg-red">Alternate Name:</span> {{$service->service_alternate_name}}</h4>
 
-                        <h4 class="panel-text"><span class="badge bg-red">Category:</span> {{$service->taxonomy()->first()->taxonomy_name}}</h4>
+                        <h4 class="panel-text"><span class="badge bg-red">Category:</span>@if($service->service_organization!=null) {{$service->taxonomy()->first()->taxonomy_name}} @endif</h4>
 
-                        <h4 class="panel-text"><span class="badge bg-red">Organization:</span> {{$service->organization()->first()->organization_name}}</h4>
+                        <h4 class="panel-text"><span class="badge bg-red">Organization:</span>@if($service->service_taxonomy!=0) {{$service->organization()->first()->organization_name}} @endif</h4>
 
                         <h4 class="panel-text"><span class="badge bg-blue">Description:</span> {!! $service->service_description !!}</h4>
 
@@ -82,7 +82,7 @@ ul#ui-id-1 {
                 <h4><span class="badge bg-blue">Address:</span>
                     
                         @foreach($service->address as $address)
-                           <br>{{ $address->address_1 }}, {{ $address->address_city }}, {{ $address->address_state_province }}, {{ $address->address_postal_code }}
+                           <br>{{ $address->address_1 }} {{ $address->address_city }} {{ $address->address_state_province }} {{ $address->address_postal_code }}
                         @endforeach
                     
                 </h4>
