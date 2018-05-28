@@ -38,7 +38,7 @@ ul#ui-id-1 {
         <div class="row" style="margin-right: 0">
             <div class="col-md-8 pt-15 pr-0">
                 @foreach($services as $service)
-                
+
                 <div class="panel content-panel">
                     <div class="panel-body p-20">
                         @if($service->service_taxonomy!=0)
@@ -134,7 +134,7 @@ ul#ui-id-1 {
                        
                 infoWindow: {
                     maxWidth: 250,
-                    content: ('<a href="/service_" style="color:#424242;font-weight:500;font-size:14px;">'+value.services.service_name+'<br>'+value.organization.organization_name+'</a>')
+                    content: ('<a href="/service_" style="color:#424242;font-weight:500;font-size:14px;">'+value.services[0].service_name+'<br>'+value.organization.organization_name+'</a>')
                 }
             });
         }
