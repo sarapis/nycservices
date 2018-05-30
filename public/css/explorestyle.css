@@ -523,7 +523,8 @@ p{
 }
 .btn_findout{
   background-color: transparent;
-  border: 0;
+  border: 1.3px solid white;
+  border-radius: .215rem;
 }
 /*
 .ui-menu .ui-menu-item:hover:before {
@@ -710,4 +711,9 @@ p{
   background-color:transparent;
   color:#fff;
   border: 0;
+}
+.btn-search{
+  padding-right: 20px !important;
+  background: #3f8a7b;
+  border-color: #3f8a7b;
 }

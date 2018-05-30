@@ -26,12 +26,21 @@ Home
           <!-- Panel -->
           <div class="panel mb-10">
             <div class="panel-heading text-center">
-                <h1 class="panel-title" style="font-size: 25px;">I need ..</h1>
+                <h1 class="panel-title" style="font-size: 25px;">I Need ...</h1>
             </div>
             <div class="panel-body text-center">
                 <form action="/find" method="POST" class="hidden-sm hidden-xs col-md-6 col-md-offset-3" style="display: block !important; padding-bottom: 30px;padding: 5px; ">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    <div class="input-icon right text-white"><a href=""><i class="fa fa-search"></i></a><input type="text" placeholder="Search here..." class="form-control text-black" name="find"/></div>
+                    <div class="input-group pull-right text-white">
+                      <!--   <input type="text" placeholder="Search here..." class="form-control text-black" name="find"/>
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button> -->
+
+                        <input type="text" class="form-control" placeholder="Search here..." name="find"/>
+                        <div class="input-group-btn pull-right ">
+                            <button type="submit" class="btn btn-primary btn-search"><i class="fa fa-search"></i></button>
+                        </div>
+
+                    </div>
                 </form>
             </div>
           </div>
@@ -70,8 +79,8 @@ Home
                                 </div>
                               
                           </div>
-                          <button type="submit" class="btn_findout"><h4 class="text-white mb-0">Search</h4></button>
-                           <a href="/services_near_me" class="btn_findout pull-right"><h4 class="text-white mb-0">Services Near Me</h4></a>
+                          <button type="submit" class="btn btn_findout"><h4 class="text-white mb-0">Search</h4></button>
+                           <a href="/services_near_me" class="btn btn_findout pull-right"><h4 class="text-white mb-0">Services Near Me</h4></a>
                         </form>
                     </div>
                 </div>
