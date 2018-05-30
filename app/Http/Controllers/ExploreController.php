@@ -24,7 +24,8 @@ class ExploreController extends Controller
         // echo $ip;
         $data = \Geolocation::get($ip);
 
-
+        $chip_title = "";
+        $chip_name = "Search Near Me";
         // $auth = new Location();
         // $locations = $auth->geolocation(40.573414, -73.987818);
         // var_dump($locations);
@@ -50,15 +51,16 @@ class ExploreController extends Controller
             }
         }
         
-        return view('frontEnd.near', compact('services','locations'));
+        return view('frontEnd.near', compact('services','locations', 'chip_title', 'chip_name'));
     }
 
     public function geocode(Request $request)
     {
         $ip= \Request::ip();
 
-        $search_address = $request->input('search_address');
-        $response = Geocode::make()->address($search_address);
+        $chip_title = "Search Address:";
+        $chip_name = $request->input('search_address');
+        $response = Geocode::make()->address($chip_name);
 
     //     if ($response) {
     //         echo $response->latitude();
@@ -90,7 +92,7 @@ class ExploreController extends Controller
             }
         }
         
-        return view('frontEnd.near', compact('services','locations'));
+        return view('frontEnd.near', compact('services','locations', 'chip_title', 'chip_name'));
 
     }
     public function index(Request $request)

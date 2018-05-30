@@ -46,11 +46,11 @@ ul#ui-id-1 {
                         @if($organization->organization_services!='')
                         <h4 class="panel-text"> 
                             @foreach($organization->service as $service)
-                                {{$service->service_name}},
+                                {{$service->taxonomy->first()->taxonomy_name}},
                             @endforeach
                         </h4>
                         @endif
-                        <h4 class="panel-text"> {{$organization->organization_description}}</h4>
+                        <h4 class="panel-text"><span class="badge bg-red">Description:</span> {{$organization->organization_description}}</h4>
 
                         <h4 class="panel-text"><span class="badge bg-red">Website</span> {{$organization->organization_url}}</h4>
 
@@ -67,9 +67,14 @@ ul#ui-id-1 {
                     @foreach($organization->service as $service)
                     <div class="panel content-panel">
                         <div class="panel-body p-20">
-                            <h4>{{$service->taxonomy()->first()->taxonomy_name}}</h4>
-                            <a class="panel-link" href="/service_{{$service->service_recordid}}">{{$service->service_name}}</a>
-                            <h4>Provided by: {{$service->organization()->first()->organization_name}}</h4>
+
+                            <h4><span class="badge bg-red">Service:</span><a class="panel-link" href="/service_{{$service->service_recordid}}"> {{$service->service_name}}</a></h4>
+
+                            <h4><span class="badge bg-red">Category:</span><a class="panel-link" href="/category_{{$service->taxonomy()->first()->taxonomy_recordid}}"> {{$service->taxonomy()->first()->taxonomy_name}}</a></h4>
+
+                            <h4><span class="badge bg-red">Oragnization:</span><a class="panel-link" href="/organization_{{$service->organization()->first()->organization_recordid}}"> {{$service->organization()->first()->organization_name}}</a></h4>
+
+
                             <h4><span class="badge bg-red">Phone:</span> @foreach($service->phone as $phone) {!! $phone->phone_number !!} @endforeach</h4>
                             <h4><span class="badge bg-blue">Address:</span>
                                 @if($service->service_address!=NULL)

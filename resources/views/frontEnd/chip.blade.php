@@ -37,20 +37,21 @@ ul#ui-id-1 {
         <!-- Example Striped Rows -->
         <div class="row" style="margin-right: 0">
             <div class="alert alert-alt alert-success alert-dismissible alert-chip" role="alert">
-                  {{$chip_title}} <a class="alert-link">{{$chip_name}}</a>
+                  {{$chip_title}}: <a class="alert-link">{{$chip_name}}</a>
             </div>
             <div class="col-md-12 p-0">
                 <div class="col-md-8 pt-15 pr-0">
                     @foreach($services as $service)
-                    
+
                     <div class="panel content-panel">
                         <div class="panel-body p-20">
-                            @if($service->service_taxonomy!=0)
-                            <h4>{{$service->taxonomy()->first()->taxonomy_name}}</h4>
-                            @endif
+                            
                             <a class="panel-link" href="/service_{{$service->service_recordid}}">{{$service->service_name}}</a>
+                            @if($service->service_taxonomy!=0)
+                            <h4><span class="badge bg-red">Category:</span> <a class="panel-link" href="/category_{{$service->taxonomy()->first()->taxonomy_recordid}}">{{$service->taxonomy()->first()->taxonomy_name}}</a></h4>
+                            @endif
                             @if($service->service_organization!=null)
-                            <h4>Provided by: {{$service->organization()->first()->organization_name}}</h4>
+                            <h4><span class="badge bg-red">Organization:</span><a class="panel-link" href="/organization_{{$service->organization()->first()->organization_recordid}}"> {{$service->organization()->first()->organization_name}}</a></h4>
                             @endif
                             <h4><span class="badge bg-red">Phone:</span> @foreach($service->phone as $phone) {!! $phone->phone_number !!} @endforeach</h4>
                             <h4><span class="badge bg-blue">Address:</span>
@@ -64,7 +65,9 @@ ul#ui-id-1 {
                         </div>
                     </div>
                     @endforeach
-
+                    <div class="pagination p-20">
+                        {{ $services->appends(\Request::except('page'))->render() }}
+                    </div>
                 </div>
                 
                 <div class="col-md-4 p-0">
@@ -122,7 +125,7 @@ ul#ui-id-1 {
       el: '#map',
       lat: avglat,
       lng: avglng,
-      zoom:12
+      zoom:10
     });
 
 
@@ -137,7 +140,7 @@ ul#ui-id-1 {
                        
                 infoWindow: {
                     maxWidth: 250,
-                    content: ('<a href="/service_" style="color:#424242;font-weight:500;font-size:14px;">'+value.services.service_name+'<br>'+value.organization.organization_name+'</a>')
+                    content: ('<a href="/service_'+value.services[0].service_recordid+'" style="color:#428bca;font-weight:500;font-size:14px;">'+value.services[0].service_name+'</a><br><p>'+value.organization.organization_name+'</p>')
                 }
             });
         }
