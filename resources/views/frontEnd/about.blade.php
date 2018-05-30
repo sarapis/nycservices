@@ -48,7 +48,7 @@ About
                     </div>
                 </div>
                 <div class="panel-body">
-                    <p>What do people fund when given the opportunity? Check out how New York neighborhoods are spending public money and explore PB-generated projects here</p>
+                    {!! $home->body !!}
                 </div>
             </div>
         </div>

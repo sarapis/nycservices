@@ -24,7 +24,8 @@ class HomeController extends Controller
     public function about($value='')
     {
         $about = Page::where('name', 'About')->first();
-        return view('frontEnd.about', compact('about'));
+        $home = Page::where('name', 'Home')->first();
+        return view('frontEnd.about', compact('about', 'home'));
     }
 
     public function feedback($value='')
