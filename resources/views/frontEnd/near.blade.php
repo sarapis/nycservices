@@ -45,12 +45,12 @@ ul#ui-id-1 {
                     
                     <div class="panel content-panel">
                         <div class="panel-body p-20">
-                            @if($service->service_taxonomy!=0)
-                            <h4>{{$service->taxonomy()->first()->taxonomy_name}}</h4>
-                            @endif
                             <a class="panel-link" href="/service_{{$service->service_recordid}}">{{$service->service_name}}</a>
+                            @if($service->service_taxonomy!=0)
+                            <h4><span class="badge bg-red">Category:</span> <a class="panel-link" href="/category_{{$service->taxonomy()->first()->taxonomy_recordid}}">{{$service->taxonomy()->first()->taxonomy_name}}</a></h4>
+                            @endif
                             @if($service->service_organization!=null)
-                            <h4>Provided by: {{$service->organization()->first()->organization_name}}</h4>
+                            <h4><span class="badge bg-red">Organization:</span><a class="panel-link" href="/organization_{{$service->organization()->first()->organization_recordid}}"> {{$service->organization()->first()->organization_name}}</a></h4>
                             @endif
                             <h4><span class="badge bg-red">Phone:</span> @foreach($service->phone as $phone) {!! $phone->phone_number !!} @endforeach</h4>
                             <h4><span class="badge bg-blue">Address:</span>
