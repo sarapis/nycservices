@@ -36,26 +36,31 @@ ul#ui-id-1 {
         <!-- <div id="map" style="height: 30vh;"></div> -->
         <!-- Example Striped Rows -->
         <div class="row" style="margin-right: 0">
-            <div class="col-md-8 pt-15 pr-0">
-                @foreach($services as $service)
-                <div class="panel content-panel">
-                    <div class="panel-body p-20">
-                        <h4>{{$service->taxonomy()->first()->taxonomy_name}}</h4>
-                        <h4>{{$service->service_name}}</h4>
-                        <h4>Provided by: {{$service->organization()->first()->organization_name}}</h4>
-                        <h4><span class="badge bg-red">Phone:</span> @foreach($service->phone as $phone) {!! $phone->phone_number !!} @endforeach</h4>
-                        <h4><span class="badge bg-blue">Address:</span> @if($service->service_contacts!=NULL) {{$service->contact()->first()->contact_name}} @endif</h4>
-                        <h4><span class="badge bg-blue">Description:</span> {!! str_limit($service->service_description, 200) !!}</h4>
+            <div class="alert alert-alt alert-success alert-dismissible alert-chip" role="alert">
+                  {{$chip_title}}: <a class="alert-link">{{$chip_name}}</a>
+            </div>
+            <div class="col-md-12 p-0">
+                <div class="col-md-8 pt-15 pr-0">
+                    @foreach($services as $service)
+                    <div class="panel content-panel">
+                        <div class="panel-body p-20">
+                            <h4>{{$service->taxonomy()->first()->taxonomy_name}}</h4>
+                            <h4>{{$service->service_name}}</h4>
+                            <h4>Provided by: {{$service->organization()->first()->organization_name}}</h4>
+                            <h4><span class="badge bg-red">Phone:</span> @foreach($service->phone as $phone) {!! $phone->phone_number !!} @endforeach</h4>
+                            <h4><span class="badge bg-blue">Address:</span> @if($service->service_contacts!=NULL) {{$service->contact()->first()->contact_name}} @endif</h4>
+                            <h4><span class="badge bg-blue">Description:</span> {!! str_limit($service->service_description, 200) !!}</h4>
+                        </div>
+                    </div>
+                    @endforeach
+                    <div class="pagination p-20">
+                        {{ $services->appends(\Request::except('page'))->render() }}
                     </div>
                 </div>
-                @endforeach
-                <div class="pagination p-20">
-                    {{ $services->appends(\Request::except('page'))->render() }}
+                
+                <div class="col-md-4 p-0">
+                    <div id="map" style="position: fixed !important;width: 28%;"></div>
                 </div>
-            </div>
-            
-            <div class="col-md-4 p-0">
-                <div id="map" style="position: fixed !important;width: 28%;"></div>
             </div>
         </div>
     </div>
@@ -73,14 +78,14 @@ ul#ui-id-1 {
 <script>
     $(document).ready(function(){
         if(screen.width < 768){
-          var text= $('.navbar-container').css('height');
+          var text= $('.navbar-header').css('height');
           var height = text.slice(0, -2);
           $('.page').css('padding-top', height);
           $('#content').css('top', height);
         }
         else{
-          var text= $('.navbar-container').css('height');
-          var height = text.slice(0, -2);
+          var text= $('.navbar-header').css('height');
+          var height = 0;
           $('.page').css('margin-top', height);
         }
     });

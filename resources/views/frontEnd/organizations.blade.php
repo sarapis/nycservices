@@ -63,14 +63,14 @@ ul#ui-id-1 {
 <script>
     $(document).ready(function(){
         if(screen.width < 768){
-          var text= $('.navbar-container').css('height');
+          var text= $('.navbar-header').css('height');
           var height = text.slice(0, -2);
           $('.page').css('padding-top', height);
           $('#content').css('top', height);
         }
         else{
-          var text= $('.navbar-container').css('height');
-          var height = text.slice(0, -2);
+          var text= $('.navbar-header').css('height');
+          var height = 0;
           $('.page').css('margin-top', height);
         }
     });

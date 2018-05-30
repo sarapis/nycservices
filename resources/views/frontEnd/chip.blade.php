@@ -37,7 +37,7 @@ ul#ui-id-1 {
         <!-- Example Striped Rows -->
         <div class="row" style="margin-right: 0">
             <div class="alert alert-alt alert-success alert-dismissible alert-chip" role="alert">
-                  {{$chip_title}}: <a class="alert-link">{{$chip_name}}</a>
+                  {{$chip_title}} <a class="alert-link">{{$chip_name}}</a>
             </div>
             <div class="col-md-12 p-0">
                 <div class="col-md-8 pt-15 pr-0">
@@ -81,14 +81,14 @@ ul#ui-id-1 {
 <script>
     $(document).ready(function(){
         if(screen.width < 768){
-          var text= $('.navbar-container').css('height');
+          var text= $('.navbar-header').css('height');
           var height = text.slice(0, -2);
           $('.page').css('padding-top', height);
           $('#content').css('top', height);
         }
         else{
-          var text= $('.navbar-container').css('height');
-          var height = text.slice(0, -2);
+          var text= $('.navbar-header').css('height');
+          var height = 0;
           $('.page').css('margin-top', height);
         }
     });

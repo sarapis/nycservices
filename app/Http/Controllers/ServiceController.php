@@ -190,7 +190,7 @@ class ServiceController extends Controller
     public function taxonomy($id)
     {
         $chip_name = Taxonomy::find($id)->value('taxonomy_name');
-        $chip_title = 'Category';
+        $chip_title = 'Category:';
         $services = Service::where('service_taxonomy', '=', $id)->orderBy('service_name')->paginate(10);
         $locations = Location::where('location_organization', '=', $id)->with('services','organization')->get();
 
