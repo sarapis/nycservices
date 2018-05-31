@@ -318,6 +318,7 @@ p{
     }
     .home-sidebar{
       display: block;
+      height: 0;
     }
 }
 
