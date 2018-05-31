@@ -52,7 +52,7 @@ class HomeController extends Controller
     public function search(Request $request)
     {
         $chip_name = $request->input('find');
-        $chip_title ="Search for Projects:";
+        $chip_title ="Search for Services:";
 
         $services= Service::with(['organization', 'taxonomy'])->where('service_name', 'like', '%'.$chip_name.'%')->orwhere('service_description', 'like', '%'.$chip_name.'%')->orwhereHas('organization', function ($q)  use($chip_name){
                     $q->where('organization_name', 'like', '%'.$chip_name.'%');

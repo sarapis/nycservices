@@ -66,7 +66,7 @@ a, a:hover, a:focus {
 
 #sidebar .sidebar-header {
     padding: 20px;
-    background: #b8e6e2;
+    background: #A2E9FF;
 }
 
 #sidebar ul.components {
@@ -186,7 +186,7 @@ li.status-side:hover {
 }
 
 .bg-custom{
-  background-color: #3f8a7b;
+  background-color: #2196F3;
 }
 
 p{
@@ -559,7 +559,7 @@ p{
   height: auto;
 }
 .footer-feedback{
-  background-color: #3f8a7b;
+  background-color: #2196F3;
   min-height: 68px;
   color: white;
 }
@@ -714,8 +714,8 @@ p{
 }
 .btn-search{
   padding-right: 20px !important;
-  background: #3f8a7b;
-  border-color: #3f8a7b;
+  background: #2196F3;
+  border-color: #2196F3;
 }
 .alert-chip{
   margin-left: 30px;

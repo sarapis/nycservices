@@ -9,7 +9,7 @@
                 <form action="/find" method="POST" class="input-search">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <i class="input-search-icon md-search" aria-hidden="true"></i>
-                    <input type="text" class="form-control search-form" name="find" placeholder="Search for Projects" id="search_address">
+                    <input type="text" class="form-control search-form" name="find" placeholder="Search for Services" id="search_address">
                     
                 </form>
                 
@@ -31,7 +31,7 @@
             </li>
 
             <li class="option-side">
-                <button class="btn btn-block waves-effect waves-classic" style="padding: 0;background: #b8e6e2;"><a href="/services_near_me" style="display: block;padding-left: 10px;">Services Near Me</a></button>
+                <button class="btn btn-block waves-effect waves-classic" style="padding: 0;background: #A2E9FF;"><a href="/services_near_me" style="display: block;padding-left: 10px;">Services Near Me</a></button>
             </li> 
                     
             <li class="option-side">
