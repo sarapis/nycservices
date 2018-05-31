@@ -239,6 +239,12 @@ p{
 .filter-desktop{
   display: block;
 }
+.sidebar-menu{
+  display: none;
+}
+.home-sidebar{
+  display: none;
+}
 /* ---------------------------------------------------
     MEDIAQUERIES
 ----------------------------------------------------- */
@@ -249,13 +255,13 @@ p{
     #sidebar.active {
         margin-left: 0;
         position: absolute;
-        height: calc(100% - 68px);
+        height: calc(100%);
     }
     #content {
         width: 100%;
         position: absolute;
         bottom: 0;
-        top: 68px;
+        top: 0px;
         overflow-y: scroll;
     }
     #content.active {
@@ -302,6 +308,15 @@ p{
       margin-top: 15px;
     }
     .profile-location{
+      display: block;
+    }
+    .nav-menu{
+      display: none !important;
+    }
+    .sidebar-menu{
+      display: block;
+    }
+    .home-sidebar{
       display: block;
     }
 }
@@ -493,9 +508,9 @@ p{
   }
 }
 @media (max-width: 991px) {
-  .page{
+/*  .page{
   padding-top: 50px;
-  } 
+  } */
   .ticker{
     display: none;
   }
@@ -554,10 +569,7 @@ p{
   padding-left: 7px;
     
 }
-.site-footer {
-  padding: 0;
-  height: auto;
-}
+
 .footer-feedback{
   background-color: #2196F3;
   min-height: 68px;
@@ -722,4 +734,11 @@ p{
   margin-top: 15px;
   margin-bottom: 0;
   box-shadow: 0 1px 6px rgba(57,73,76,.35);
+}
+.footer-menu{
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 1.0715rem;
+  padding-left: 1.0715rem;
+  width: 100%;
 }

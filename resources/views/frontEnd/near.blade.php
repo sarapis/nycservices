@@ -75,7 +75,7 @@ ul#ui-id-1 {
     </div>
 </div>
 
-<script>
+<!-- <script>
     $(document).ready(function(){
         if(screen.width < 768){
           var text= $('.navbar-header').css('height');
@@ -89,7 +89,7 @@ ul#ui-id-1 {
           $('.page').css('margin-top', height);
         }
     });
-</script>
+</script> -->
 <script>
     
     var locations = <?php print_r(json_encode($locations)) ?>;

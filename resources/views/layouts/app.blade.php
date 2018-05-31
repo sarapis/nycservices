@@ -7,9 +7,9 @@
     <div class="page container-fluid pl-0 pr-0">
 	    @yield('content')
 	<div class="overlay"></div>   
-	@include('layouts.footer')
-	</div>
 	
+	</div>
+	@include('layouts.footer')
 	<!-- /page content -->
 
 

@@ -1,30 +1,30 @@
 
 <div class="left_col scroll-view">
   <div class="navbar nav_title" style="border: 0;">
-    <a href="{{url('dashboard')}}" class="site_title"><i class="fa fa-paw"></i> <span>PBNYC</span></a>
+    <a href="{{url('dashboard')}}" class="site_title"><i class="fa fa-paw"></i> <span>NYC Services</span></a>
   </div>
 
   <div class="clearfix"></div>
 
   <!-- menu profile quick info -->
-  <div class="profile">
+<!--   <div class="profile">
     <div class="profile_pic">
-      <img src="{{ URL::asset('/images/myPB.png') }}" alt="..." class="img-circle profile_img">
+      <a href="{{url('dashboard')}}" class="site_title"><i class="fa fa-paw"></i> <span>NYC Services</span></a>
     </div>
     <div class="profile_info">
       <span>Welcome,</span>
       <h2>{{Sentinel::getUser()->first_name.' ' .Sentinel::getUser()->last_name }}</h2>
     </div>
-  </div>
+  </div> -->
   <!-- /menu profile quick info -->
 
   <br />
 
   <!-- sidebar menu -->
   <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-    <div class="menu_section" style="padding-top: 70px;">
+    <div class="menu_section">
       <ul class="nav side-menu">
-        <li><a href="/" target="_blank"><i class="fa fa-desktop blue"></i> View PBNYC</a></li>
+        <li><a href="/" target="_blank"><i class="fa fa-desktop blue"></i> View Site</a></li>
       </ul>
     </div>
     <div class="menu_section">

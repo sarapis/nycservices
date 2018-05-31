@@ -1,6 +1,17 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
 <nav id="sidebar">
+    <ul class="list-unstyled components pt-0 mb-0 sidebar-menu"> 
+        <li class="option-side">
+            <button class="btn btn-block waves-effect waves-classic" style="padding: 0;background: #A2E9FF;"><a href="/services" style="display: block;padding-left: 10px;">Services</a></button>
+        </li>
+        <li class="option-side">
+            <button class="btn btn-block waves-effect waves-classic" style="padding: 0;background: #A2E9FF;"><a href="/organizations" style="display: block;padding-left: 10px;">Organizations</a></button>
+        </li>
+        <li class="option-side">
+            <button class="btn btn-block waves-effect waves-classic" style="padding: 0;background: #A2E9FF;"><a href="/about" style="display: block;padding-left: 10px;">About</a></button>
+        </li>
+    </ul>
     <div class="sidebar-header p-10">
         <div class="form-group" style="margin: 0;">
         <!--begin::Form-->

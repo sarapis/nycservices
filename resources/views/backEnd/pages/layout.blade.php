@@ -43,7 +43,7 @@ Edit Layout
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Site Name 
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input type="name" id="email" name="site_name" required="required" class="form-control col-md-7 col-xs-12" value="{{$layout->site_name}}">
+                  <input type="name" id="email" name="site_name" class="form-control col-md-7 col-xs-12" value="{{$layout->site_name}}">
                 </div>
               </div>
 
@@ -51,7 +51,7 @@ Edit Layout
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="occupation">Tagline 
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input id="occupation" type="text" name="tagline" required="required" class="optional form-control col-md-7 col-xs-12" value="{{$layout->tagline}}">
+                  <input id="occupation" type="text" name="tagline" class="optional form-control col-md-7 col-xs-12" value="{{$layout->tagline}}">
                 </div>
               </div>
 

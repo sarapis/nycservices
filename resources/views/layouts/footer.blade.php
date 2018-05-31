@@ -1,5 +1,4 @@
-<div class="container-fluid" style="position: relative;
-    z-index: 1;">
+<footer class="footer-menu">
   	<div class="row footer-feedback">
     	<div class="col-md-8 text-center" style="padding-left: 85px;padding-right: 85px;">
     		<h3 class="feedback-title">{{$layout->contact_text}}</h3>

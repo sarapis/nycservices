@@ -7,7 +7,7 @@
 <!--   <meta name="description" content="bootstrap admin template"> -->
   <meta name="author" content="">
   <meta name="_token" content="{!! csrf_token() !!}" />
-  <title>@yield('title')| PBNYC</title>
+  <title>@yield('title')| Nycservices.sarapis</title>
   <link rel="apple-touch-icon" href="../../frontend/assets/images/apple-touch-icon.png">
   <link rel="shortcut icon" href="../../frontend/assets/images/favicon.ico">
   <!-- Stylesheets -->
@@ -110,11 +110,25 @@
   .goog-te-menu-value span:nth-child(1){
     
   }
-  .goog-te-gadget-simple .goog-te-menu-value span {
+  .goog-te-gadget-simple .goog-te-menu-value span:nth-of-type(1) {
+    font-family: 'Font Awesome' !important;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 22px !important;
+    position: relative;
+    display: inline-block;
+    -webkit-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    -o-transform: translate(0, 0);
+    transform: translate(0, 0);
+    text-rendering: auto;
+    speak: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     visibility: hidden;
   }
   .goog-te-gadget-simple .goog-te-menu-value span:before {
-    content: 'Languages';
+    content: "\f1ab";
     visibility: visible;
   }
   .goog-te-menu-value {
