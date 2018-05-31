@@ -254,15 +254,15 @@ p{
     }
     #sidebar.active {
         margin-left: 0;
-        position: absolute;
+        position: absolute !important;
         height: calc(100%);
     }
     #content {
         width: 100%;
-        position: absolute;
+        position: static;
         bottom: 0;
         top: 0px;
-        overflow-y: scroll;
+        overflow-y: hidden;
     }
     #content.active {
         /*left: 270px;*/
