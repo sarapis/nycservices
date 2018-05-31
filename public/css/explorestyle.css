@@ -54,7 +54,7 @@ a, a:hover, a:focus {
     max-width: 270px;
     background: #f3f3f3;
     color: #424242;
-    z-index: 300;
+    z-index: 1200;
     transition: all 0.3s;
     box-shadow: 0 1px 6px rgba(57,73,76,.35);
 
